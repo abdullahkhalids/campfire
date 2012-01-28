@@ -6,7 +6,7 @@ rotMat = [cos(trough.rotAngle) sin(trough.rotAngle); ...
     -sin(trough.rotAngle) cos(trough.rotAngle)];
 
 %Get all possible x
-coord = -trough.width/2-simulation.grainSize:simulation.grainSize:trough.width/2+simulation.grainSize;
+coord = -trough.width/2-simulation.grainLength:simulation.grainLength:trough.width/2+simulation.grainLength;
 
 %Compute corresponding y for horizontal parabola
 coord(2,:) = coord.^2/(4*trough.focalLength);

@@ -1,5 +1,5 @@
-% Version 2.0.
-% Frozen January 27, 2012 5:30 pm.
+% Version 2.1.
+% Frozen January 28, 2012 2:00 pm.
 %Implements the following features
 %1.The simulation is only in 2D.
 %2.The trough is a parabola. The receiver a circle with random
@@ -12,3 +12,15 @@
 %independent and the spectrum of the incoming sunlight is not considered.
 %5. The intensity on every point on the receiver is available, but not the
 %incident angles.
+
+%Bugs ang Technical
+%1.Fixed a bug in the gradients computation. Gradients.m and GradientNormal.m
+%2.Created functions to convert between angles and gradients and put them in
+%the library.
+%3.Made matrix dimensions uniform
+%4.Made some variable renaming. Mainly 'angle' variables.
+%simulation.grainSize went to simulation.grainLength.
+
+
+%To be fixed
+%1. Some problem is still there in receiver distribution

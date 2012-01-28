@@ -3,7 +3,7 @@
 %Sim area
 simulation = struct();
 simulation.size = [1 1];
-simulation.grainSize = 1e-3;
+simulation.grainLength = 1e-3;
 %simulation.numberOfReflections = 2;
 
 %Trough Characteristics
@@ -20,7 +20,7 @@ receiver.radius = 0.05;
 
 %Sun Characteristics
 sun = struct();
-sun.positionAngle = deg2rad(30);
+sun.positionAngle = deg2rad(22);
 sun.halfAngle = deg2rad(min2deg(16));
 sun.intensity = 1000;
 

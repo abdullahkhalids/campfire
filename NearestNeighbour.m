@@ -1,16 +1,16 @@
 function nearestNeighbourIndex = NearestNeighbour(searchSpace, points)
 %Computes the index of the nearest neighbour of the 'point' by looking at
 %point in the searchSpace. Uses Euclidean Distance
-%searchSpace: k x d where there are k vectors in a d dimensional space
-%point: p x d are p d dimensional vectors
+%searchSpace: d x k where there are k vectors in a d dimensional space
+%point: d x p are p d dimensional vectors
 
-s = size(points,1);
+p = size(points,2);
+r = size(searchSpace,2);
+nearestNeighbourIndex = zeros(1,p);
 
-nearestNeighbourIndex = zeros(s);
-
-for i = 1:s
+for i = 1:p
     %compute square distances of each point 
-    squareDistances = sum((searchSpace - repmat(points(i,:),size(searchSpace,1),1)).^2,2);
+    squareDistances = sum((searchSpace - repmat(points(:,i),1,r)).^2,1);
     
     %get the nearest neighbour index
     nearestNeighbourIndex(i) = find(squareDistances == min(squareDistances));

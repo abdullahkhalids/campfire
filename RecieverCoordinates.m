@@ -2,7 +2,7 @@ function receiverCoordinates = RecieverCoordinates(receiver, simulation)
 %Computes all the coordinates of the receiver
 
 %the receiver is a circle
-x = -receiver.radius:simulation.grainSize:receiver.radius;
+x = -receiver.radius:simulation.grainLength:receiver.radius;
 y = sqrt(receiver.radius^2 - x.^2);
 
 %both halfs of the circle

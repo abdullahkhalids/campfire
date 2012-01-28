@@ -1,11 +1,13 @@
-function indexes = IntersectionIndexes(coordinates,x,y)
-%computes the intersection coordinates 
+function indexes = IntersectionIndexes(coordinates,pointsIntersections)
+%computes the intersection coordinates using a nearest neighbour approach
 
-indexes = zeros(size(x));
+l = length(pointsIntersections);
 
-for i=1:length(x)
-    if x(i) ~= 0 && y(i) ~= 0
-        indexes(i) = NearestNeighbour(coordinates', [x(i) y(i)]);
+indexes = zeros(1,l);
+
+for i=1:l
+    if pointsIntersections(1,i) ~= 0 && pointsIntersections(2,i) ~= 0
+        indexes(i) = NearestNeighbour(coordinates, pointsIntersections(:,i));
     end
 end
 

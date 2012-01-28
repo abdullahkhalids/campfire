@@ -1,11 +1,7 @@
 function normalGradients = GradientNormal(coordinates)
 %Computes the gradient of the normal
 
-normalGradients = zeros(1,length(coordinates));
-
-for i=2:length(coordinates) - 1
-    normalGradients(i) = -(coordinates(1,i+1) - coordinates(1,i-1))/(coordinates(2,i+1) - coordinates(2,i-1));
-end
+normalGradients = - (coordinates(1,3:end) - coordinates(1,2:end-1))./(coordinates(2,3:end) - coordinates(2,2:end-1));
 
 end
 

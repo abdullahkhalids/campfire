@@ -25,7 +25,3 @@ pointsIntersection(1,shouldSwitch) = x2(shouldSwitch);
 pointsIntersection(2,shouldSwitch) = y2(shouldSwitch);
 
 end
-%computes the squares distances pairwise between two 2 x n matrices
-function dis = SquareDistance(points1, points2)
-    dis = sum((points1 - points2).^2, 1);
-end

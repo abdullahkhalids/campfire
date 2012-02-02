@@ -6,7 +6,7 @@ l = length(pointsIntersections);
 indexes = zeros(1,l);
 
 for i=1:l
-    if pointsIntersections(1,i) ~= 0 && pointsIntersections(2,i) ~= 0
+    if pointsIntersections(1,i) ~= 0 && pointsIntersections(2,i) ~= 0 && ~isnan(pointsIntersections(1,i)) && ~isnan(pointsIntersections(2,i))
         indexes(i) = NearestNeighbour(coordinates, pointsIntersections(:,i));
     end
 end

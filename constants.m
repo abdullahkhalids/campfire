@@ -10,7 +10,7 @@ simulation.grainLength = 1e-3;
 trough = struct();
 trough.focalLength = 0.4;
 trough.focusCoordinates = [0 0];
-trough.rotAngle = deg2rad(20);
+trough.rotAngle = deg2rad(0);
 trough.width = 2;
 trough.refractiveIndex = AluminiumRefractiveIndex;
 
@@ -20,7 +20,7 @@ receiver.radius = 0.05;
 
 %Sun Characteristics
 sun = struct();
-sun.positionAngle = deg2rad(20);
+sun.positionAngle = deg2rad(4);
 sun.halfAngle = deg2rad(min2deg(16));
 sun.intensity = 1000;
 

@@ -8,7 +8,7 @@ simulation.grainLength = 1e-3;
 
 %Trough Characteristics
 trough = struct();
-trough.focalLength = 0.4;
+trough.focalLength = 0.2;
 trough.focusCoordinates = [0 0];
 trough.rotAngle = deg2rad(0);
 trough.width = 2;
@@ -20,9 +20,10 @@ receiver.radius = 0.05;
 
 %Sun Characteristics
 sun = struct();
-sun.positionAngle = deg2rad(4);
+sun.positionAngle = deg2rad(3);
 sun.halfAngle = deg2rad(min2deg(16));
-sun.intensity = 1000;
+sun.irradiance = 1000;
+sun.halfQuantization = 3;
 
 %atmosphere
 atmosphere = struct();

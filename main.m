@@ -8,6 +8,8 @@ simulation.grainVolume = (simulation.grainLength)^2;
 
 %sun
 sun.positionVector = [sin(sun.positionAngle) cos(sun.positionAngle)];
+sun.intensityDistribution = PillBox(sun,simulation);
+sun.fullQuantization = 2*sun.halfQuantization + 1;
 
 %compute trough coordinates
 trough.height = TroughHeight(trough.focalLength,trough.width);
@@ -25,4 +27,4 @@ receiverDistribution = ReceiverIntensityDistribution(simulation,trough,receiver,
 
 toc
 % plotter;
-disp(['Intercept Factor = ' num2str(sum(receiverDistribution)/(trough.width*sun.intensity)*100) '%']);
+disp(['Intercept Factor = ' num2str(sum(receiverDistribution)/(trough.width*sun.irradiance)*100) '%']);

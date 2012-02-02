@@ -4,13 +4,16 @@ function distribution = ReceiverIntensityDistribution(simulation,trough,receiver
 %Compute the incidence angles of the center of the incident sun cone with
 %the surface normal
 %anglesIncidence = trough.anglesNormal - sun.positionAngle;
-anglesIncidence = acos((sun.positionVector(2) - sun.positionVector(1)*trough.gradients)./sqrt(1+trough.gradients.^2));
+anglesConeCenterIncidence = acos((sun.positionVector(2) - sun.positionVector(1)*trough.gradients)./sqrt(1+trough.gradients.^2));
+
+%Compute all the rays of each sun cone
+anglesIncidence = SunCone(anglesConeCenterIncidence,sun);
 
 %Compute transmission angles
 anglesTransmission = snellLaw(anglesIncidence,atmosphere.refractiveIndex,trough.refractiveIndex);
 
-%gradient of reflected ray
-gradientsReflected = (sun.positionVector(2)*(1 + trough.gradients.^2) - 2*(sun.positionVector(2) - sun.positionVector(1)*trough.gradients))./(sun.positionVector(1)*(1 + trough.gradients.^2) + 2*(sun.positionVector(2) - sun.positionVector(1)*trough.gradients).*trough.gradients);
+%Compute gradients
+gradientsReflected = SunConeReflections(anglesConeCenterIncidence,trough,sun);
 
 %compute intersections of reflected rays with receiver
 pointsIntersections = LineCircleIntersection(trough,gradientsReflected,receiver);
@@ -19,11 +22,11 @@ pointsIntersections = LineCircleIntersection(trough,gradientsReflected,receiver)
 indexes = IntersectionIndexes(receiver.coordinates,pointsIntersections);
 
 %the trough receives a uniform intensity from the sun
-troughReflectedIntensities = sun.intensity*simulation.grainLength*frenelReflectionCoefficient(anglesIncidence,anglesTransmission,atmosphere.refractiveIndex,trough.refractiveIndex,'mixed');
+troughReflectedIntensities = (sun.irradiance*simulation.grainLength/sun.fullQuantization)*frenelReflectionCoefficient(anglesIncidence,anglesTransmission,atmosphere.refractiveIndex,trough.refractiveIndex,'mixed');
 
 %add up all the intensities at the receiver for each point
-distribution = zeros(1,length(receiver.coordinates));
-for i=1:length(trough.coordinates)
+distribution = zeros(1,length(troughReflectedIntensities));
+for i=1:length(troughReflectedIntensities)
     if indexes(i)~=0
         distribution(indexes(i)) = distribution(indexes(i)) + troughReflectedIntensities(i);
     end

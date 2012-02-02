@@ -1,3 +1,5 @@
+p = 1000;
+
 figure;
 hold on;
 axis equal
@@ -16,7 +18,7 @@ x = -1:0.1:1;
 y = 1/tan(sun.positionAngle)*x + (trough.coordinates(2,p) - 1/tan(sun.positionAngle)*trough.coordinates(1,p));
 plot(x,y,'r');
 %normal at the point
-y = 1/tan(trough.normalAngles(p))*x + (trough.coordinates(2,p) - 1/tan(trough.normalAngles(p))*trough.coordinates(1,p));
+y = 1/tan(trough.anglesNormal(p))*x + (trough.coordinates(2,p) - 1/tan(trough.anglesNormal(p))*trough.coordinates(1,p));
 plot(x,y,'k');
 %tangent at the point
 y = trough.gradients(p)*(x - trough.coordinates(1,p)) + trough.coordinates(2,p);
@@ -24,12 +26,12 @@ plot(x,y,'k')
 clear x y
 
 
-%Compute all possible reflected lines
-l = length(trough.coordinates);
-xr = repmat(trough.coordinates(1,:),l,1);
-mr = repmat(gradientReflected', 1,l);
-x1r = repmat(trough.coordinates(1,:)',1,l);
-y1r = repmat(trough.coordinates(2,:)',1,l);
-yr = mr.*(xr - x1r) + y1r;
-%draw one reflected line
-plot(xr(p,:),yr(p,:),'c');
+% Compute all possible reflected lines
+% l = length(trough.coordinates);
+% xr = repmat(trough.coordinates(1,:),l,1);
+% mr = repmat(gradientReflected', 1,l);
+% x1r = repmat(trough.coordinates(1,:)',1,l);
+% y1r = repmat(trough.coordinates(2,:)',1,l);
+% yr = mr.*(xr - x1r) + y1r;
+% draw one reflected line
+% plot(xr(p,:),yr(p,:),'c');

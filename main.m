@@ -6,13 +6,14 @@ constants;
 %set up some simulation factors
 simulation.grainVolume = (simulation.grainLength)^2;
 
+%sun
+sun.positionVector = [sin(sun.positionAngle) cos(sun.positionAngle)];
+
 %compute trough coordinates
 trough.height = TroughHeight(trough.focalLength,trough.width);
 trough.rimAngle = TroughRimAngle(trough.focalLength, trough.width);
 trough.coordinates = TroughCoordinates(trough, simulation);
 trough.gradients = Gradient(trough.coordinates);
-trough.gradientsNormal = GradientNormal(trough.coordinates);
-trough.anglesNormal =  AngleNormal(trough.gradients);
 trough.coordinates = trough.coordinates(:,2:end-1); %throw away the coordinates no longer needed
 
 %compute receiver coordinates
@@ -22,6 +23,6 @@ receiver.coordinates = RecieverCoordinates(receiver, simulation);
 %compute the receiver distribution
 receiverDistribution = ReceiverIntensityDistribution(simulation,trough,receiver,sun,atmosphere);
 
-% p = 1000;
-% plotter;
 toc
+% plotter;
+disp(['Intercept Factor = ' num2str(sum(receiverDistribution)/(trough.width*sun.intensity)*100) '%']);

@@ -1,10 +1,10 @@
-% Version 2.1.
-% Frozen January 28, 2012 2:00 pm.
+% Version 2.2.
+% Frozen February 02, 2012 5:30 pm.
 %Implements the following features
 %1.The simulation is only in 2D.
 %2.The trough is a parabola. The receiver a circle with random
-%perturbations on it. The geometerical properties including orientation and
-%position of both objects is full y definable.
+%perturbations on it. The geometrical properties including orientation and
+%position of both objects is fully definable.
 %3. The sun's position can be given. The sun only sends out single rays
 %rather than cones.
 %4. Light is reflected from the trough as per the reflection coefficient.
@@ -13,14 +13,9 @@
 %5. The intensity on every point on the receiver is available, but not the
 %incident angles.
 
-%Bugs ang Technical
-%1.Fixed a bug in the gradients computation. Gradients.m and GradientNormal.m
-%2.Created functions to convert between angles and gradients and put them in
-%the library.
-%3.Made matrix dimensions uniform
-%4.Made some variable renaming. Mainly 'angle' variables.
-%simulation.grainSize went to simulation.grainLength.
-
-
-%To be fixed
-%1. Some problem is still there in receiver distribution
+%Bugs and Technical
+%1. There were problems with how various angles were being calculated. I
+%used the alternate method of vector dot products to compute the angles.
+%Now seem to be getting the right results
+%2.Created a database file dataValues in the library to store various
+%material properties.

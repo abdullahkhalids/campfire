@@ -16,11 +16,11 @@ trough.refractiveIndex = AluminiumRefractiveIndex;
 
 %Receiver Characteristics
 receiver = struct();
-receiver.radius = 0.05;
+receiver.radius = 0.08;
 
 %Sun Characteristics
 sun = struct();
-sun.positionAngle = deg2rad(3);
+sun.positionAngle = deg2rad(1);
 sun.halfAngle = deg2rad(min2deg(16));
 sun.irradiance = 1000;
 sun.halfQuantization = 3;

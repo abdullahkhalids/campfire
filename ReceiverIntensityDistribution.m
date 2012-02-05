@@ -15,11 +15,8 @@ anglesTransmission = snellLaw(anglesIncidence,atmosphere.refractiveIndex,trough.
 %Compute gradients
 gradientsReflected = SunConeReflections(anglesConeCenterIncidence,trough,sun);
 
-%compute intersections of reflected rays with receiver
-pointsIntersections = LineCircleIntersection(trough,gradientsReflected,receiver);
-
-%compute which of the receiver points each of the rays ends up at
-indexes = IntersectionIndexes(receiver.coordinates,pointsIntersections);
+%Compute where each reflected ray ends up on the receiver
+indexes = ReceiverIntersections(gradientsReflected,trough,receiver,sun);
 
 %the trough receives a uniform intensity from the sun
 troughReflectedIntensities = (sun.irradiance*simulation.grainLength/sun.fullQuantization)*frenelReflectionCoefficient(anglesIncidence,anglesTransmission,atmosphere.refractiveIndex,trough.refractiveIndex,'mixed');

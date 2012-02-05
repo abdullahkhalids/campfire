@@ -1,5 +1,5 @@
-% Version 3.0.
-% Frozen February 03, 2012 12:00 am
+% Version 3.1.
+% Frozen February 05, 2012 01:00 pm.
 %Implements the following features
 %1.The simulation is only in 2D.
 %2.The trough is a parabola. The receiver a circle with random
@@ -12,4 +12,6 @@
 %5. The intensity on every point on the receiver is available, but not the
 %incident angles.
 
-
+%Bugs ang Technical
+%1. Fixed the line-circle intersection code for circles not centered at the
+%origin. Also, streamlined the code a bit

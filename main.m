@@ -19,7 +19,7 @@ trough.gradients = Gradient(trough.coordinates);
 trough.coordinates = trough.coordinates(:,2:end-1); %throw away the coordinates no longer needed
 
 %compute receiver coordinates
-receiver.position = trough.focusCoordinates;
+receiver.position = trough.focusCoordinates + [0.05 0.05];
 receiver.coordinates = RecieverCoordinates(receiver, simulation);
 
 %compute the receiver distribution

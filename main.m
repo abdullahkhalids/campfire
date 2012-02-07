@@ -1,4 +1,4 @@
-clc;
+clc; 
 tic
 %set up simulation constants
 constants;
@@ -15,16 +15,21 @@ sun.fullQuantization = 2*sun.halfQuantization + 1;
 trough.height = TroughHeight(trough.focalLength,trough.width);
 trough.rimAngle = TroughRimAngle(trough.focalLength, trough.width);
 trough.coordinates = TroughCoordinates(trough, simulation);
-trough.gradients = Gradient(trough.coordinates);
+%trough.gradients = Gradient(trough.coordinates);
+trough.gradients = SurfaceErrors(trough.coordinates,trough.surfaceStdDev);
 trough.coordinates = trough.coordinates(:,2:end-1); %throw away the coordinates no longer needed
 
 %compute receiver coordinates
-receiver.position = trough.focusCoordinates + [0.05 0.05];
+receiver.position = trough.focusCoordinates;
 receiver.coordinates = RecieverCoordinates(receiver, simulation);
+receiver.gradients = ReceiverGradient(receiver);
 
 %compute the receiver distribution
 receiverDistribution = ReceiverIntensityDistribution(simulation,trough,receiver,sun,atmosphere);
 
 toc
-% plotter;
-disp(['Intercept Factor = ' num2str(sum(receiverDistribution)/(trough.width*sun.irradiance)*100) '%']);
+
+TotalEnergy = sum(receiverDistribution);
+Efficiency = TotalEnergy/(trough.width*sun.irradiance)*100;
+disp(['Energy On Receiver = ' num2str(TotalEnergy) 'J'])
+disp(['Intercept Factor = ' num2str(Efficiency) '%']);

@@ -4,7 +4,7 @@ function distribution = ReceiverIntensityDistribution(simulation,trough,receiver
 %Compute the incidence angles of the center of the incident sun cone with
 %the surface normal
 %anglesIncidence = trough.anglesNormal - sun.positionAngle;
-anglesConeCenterIncidence = acos((sun.positionVector(2) - sun.positionVector(1)*trough.gradients)./sqrt(1+trough.gradients.^2));
+anglesConeCenterIncidence = acos(abs((sun.positionVector(2) - sun.positionVector(1)*trough.gradients)./sqrt(1+trough.gradients.^2)));
 
 %Compute all the rays of each sun cone
 anglesIncidence = SunCone(anglesConeCenterIncidence,sun);

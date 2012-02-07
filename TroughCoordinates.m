@@ -22,7 +22,6 @@ coord(2,:) = coord(2,:) - trough.focalLength;
 
 % plot(coord(1,:),coord(2,:));
 
-
 %rotate the parabola around focus
 rotCoord = rotMat*coord;
 

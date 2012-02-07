@@ -11,9 +11,6 @@ coord = [x x; -y y];
 %move to the correct position
 receiverCoordinates = coord + repmat(receiver.position',1,size(coord,2));
 
-%add random perturbations
-receiverCoordinates = receiverCoordinates + 1e-3*rand(size(receiverCoordinates));
-
 % plot(receiverCoordinates(1,:), receiverCoordinates(2,:));
 % axis equal;
 

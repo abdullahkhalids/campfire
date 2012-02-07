@@ -1,5 +1,5 @@
-% Version 3.1.
-% Frozen February 05, 2012 01:00 pm.
+% Version 3.2.
+% Frozen February 07, 2012 02:30 pm.
 %Implements the following features
 %1.The simulation is only in 2D.
 %2.The trough is a parabola. The receiver a circle with random
@@ -13,5 +13,11 @@
 %incident angles.
 
 %Bugs ang Technical
-%1. Fixed the line-circle intersection code for circles not centered at the
-%origin. Also, streamlined the code a bit
+%1. Fixed a bug in the incidence angle code where I was getting greater
+%than 90 deg angles
+%2. Fixed a bug in Nearest Neighbour algorithm where accidently multiple
+%points were at the same distance
+%3.Implemented surface perturbations on trough
+%4.Removed imaterial surface perturbations on the receiver surface and
+%added gradient perturbations which will be useful later on. There are
+%small problems on the edges

@@ -13,6 +13,6 @@ for i = 1:p
     squareDistances = sum((searchSpace - repmat(points(:,i),1,r)).^2,1);
     
     %get the nearest neighbour index
-    nearestNeighbourIndex(i) = find(squareDistances == min(squareDistances));
+    nearestNeighbourIndex(i) = find(squareDistances == min(squareDistances),1);
 end
 

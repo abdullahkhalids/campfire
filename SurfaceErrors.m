@@ -19,17 +19,5 @@ gradientsNormalNew = angle2grad(anglesNormal);
 %compute new gradients
 gradientsNew = -1./gradientsNormalNew;
 
-%compute new coordinates using new gradients
-% coordNew = coord(1,:);
-% coordNew(2,:) = 0;
-% coordNew(2,[1 end]) = coord(2,[1 end]);
-% coordNew(2,2:end-1) = gradientsNew.*(coord(1,3:end) - coord(1,2:end-1)) + coord(2,2:end-1);
-
-% coordNew = coord(1,:);
-% coordNew(2,:) = 0;
-% coordNew(2,[1 2 end]) = coord(2,[1 2 end]);
-% coordNew(2,3:end-1) = gradientsNew(1:end-1).*(coord(1,3:end-1) - coord(1,1:end-3)) + coord(2,1:end-3);
-
-
 end
 

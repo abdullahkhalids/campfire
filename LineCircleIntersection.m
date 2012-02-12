@@ -9,19 +9,19 @@ det = (gradients.*(c - center(2)) - center(1)).^2 - (1 + gradients.^2).*((center
 isIntersection = det >=0;
 
 %compute both points of intersection 
-x1 = isIntersection.*(-(gradients.*(c-center(2)) - center(1)) + sqrt(det)./(1 + gradients.^2));
-x2 = isIntersection.*(-(gradients.*(c-center(2)) - center(1)) - sqrt(det)./(1 + gradients.^2));
-y1 = gradients.*x1 + c;
-y2 = gradients.*x2 + c;
+intersections1 = isIntersection.*(-(gradients.*(c-center(2)) - center(1)) + sqrt(det)./(1 + gradients.^2));
+intersections2 = isIntersection.*(-(gradients.*(c-center(2)) - center(1)) - sqrt(det)./(1 + gradients.^2));
+intersections1(2,:) = gradients.*intersections1 + c;
+intersections2(2,:) = gradients.*intersections2 + c;
 
 %compute the squared distance between trough point and receiver point
-dis1 = SquareDistance([x1; y1],coordinates);
-dis2 = SquareDistance([x2; y2],coordinates);
+dis1 = SquareDistance(intersections1,coordinates);
+dis2 = SquareDistance(intersections2,coordinates);
 
 %figure out the closer one.
-pointsIntersections = [x1 ; y1];
+pointsIntersections = intersections1;
 shouldSwitch = dis2 < dis1;
-pointsIntersections(1,shouldSwitch) = x2(shouldSwitch);
-pointsIntersections(2,shouldSwitch) = y2(shouldSwitch);
+shouldSwitch = repmat(shouldSwitch,2,1);
+pointsIntersections(shouldSwitch) = intersections2(shouldSwitch);
 
 end

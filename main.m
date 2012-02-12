@@ -7,7 +7,7 @@ constants;
 simulation.grainVolume = (simulation.grainLength)^2;
 
 %sun
-sun.positionVector = [sin(sun.positionAngle) cos(sun.positionAngle)];
+sun.positionVector = [sin(sun.positionAngle); cos(sun.positionAngle)];
 sun.intensityDistribution = PillBox(sun,simulation);
 sun.fullQuantization = 2*sun.halfQuantization + 1;
 
@@ -15,9 +15,10 @@ sun.fullQuantization = 2*sun.halfQuantization + 1;
 trough.height = TroughHeight(trough.focalLength,trough.width);
 trough.rimAngle = TroughRimAngle(trough.focalLength, trough.width);
 trough.coordinates = TroughCoordinates(trough, simulation);
-%trough.gradients = Gradient(trough.coordinates);
 trough.gradients = SurfaceErrors(trough.coordinates,trough.surfaceStdDev);
 trough.coordinates = trough.coordinates(:,2:end-1); %throw away the coordinates no longer needed
+trough.fullQuantization = 2*trough.halfQuantization + 1;
+if trough.halfQuantization == 0; trough.specularity = 1; end;
 
 %compute receiver coordinates
 receiver.position = trough.focusCoordinates;
@@ -31,5 +32,5 @@ toc
 
 TotalEnergy = sum(receiverDistribution);
 Efficiency = TotalEnergy/(trough.width*sun.irradiance)*100;
-disp(['Energy On Receiver = ' num2str(TotalEnergy) 'J'])
+disp(['Power On Receiver = ' num2str(TotalEnergy) 'W'])
 disp(['Intercept Factor = ' num2str(Efficiency) '%']);

@@ -1,5 +1,5 @@
-% Version 3.2.
-% Frozen February 07, 2012 02:30 pm.
+% Version 4.0.
+% Frozen February 12, 2012 05:00 pm.
 %Implements the following features
 %1.The simulation is only in 2D.
 %2.The trough is a parabola. The receiver a circle with random
@@ -11,13 +11,10 @@
 %independent and the spectrum of the incoming sunlight is not considered.
 %5. The intensity on every point on the receiver is available, but not the
 %incident angles.
+%6. Specularity has been implemented
 
 %Bugs ang Technical
-%1. Fixed a bug in the incidence angle code where I was getting greater
-%than 90 deg angles
-%2. Fixed a bug in Nearest Neighbour algorithm where accidently multiple
-%points were at the same distance
-%3.Implemented surface perturbations on trough
-%4.Removed imaterial surface perturbations on the receiver surface and
-%added gradient perturbations which will be useful later on. There are
-%small problems on the edges
+%1. Changes receiver coordinates so they start from the top. Helps to make
+%it the distribution more continous.
+%2. Massively rewrote code to implement specularity.
+%3. Improved the gradient code.

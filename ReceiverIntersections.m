@@ -3,7 +3,7 @@ function indexes = ReceiverIntersections(gradientsReflected,trough,receiver,sun)
 %trough are incident
 
 %expand out coordinates to account for 
-coordinates = cell2mat(arrayfun(@(x)repmat(x,1,sun.fullQuantization),trough.coordinates,'UniformOutput', false));
+coordinates = expand(trough.coordinates,@(x)repmat(x,1,sun.fullQuantization*trough.fullQuantization));
 
 %Computes intersection with the receiver
 pointsIntersections = LineCircleIntersection(coordinates,gradientsReflected,receiver.radius,receiver.position);

@@ -10,7 +10,7 @@ anglesConeCenters = acos(abs((sun.positionVector(2) - sun.positionVector(1)*grad
 anglesIncidence = ExpandAngles(anglesConeCenters,sun.halfQuantization,sun.halfAngle);
 
 %the incidence vectors at each point
-vectorsIncidence = RotateVectors(repmat(sun.positionVector,1,length(gradients)),sun.halfQuantization,sun.halfAngle);
+vectorsIncidence = RotateVectors(repmat(sun.positionVector(1:2),1,length(gradients)),sun.halfQuantization,sun.halfAngle);
 
 %intensities
 IntensityPerCone = repmat(sun.irradiance*simulation.grainLength,1,size(anglesConeCenters,2));

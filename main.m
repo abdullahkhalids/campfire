@@ -7,8 +7,7 @@ constants;
 simulation.grainVolume = (simulation.grainLength)^2;
 
 %sun
-[sun.widthAngle sun.lengthAngle sun.daylight] = SunAngles(location.time,location.date,location.latitude,location.longitude);
-sun.positionVector = [sind(sun.widthAngle); cosd(sun.widthAngle)];
+[sun.widthAngle, sun.lengthAngle, sun.daylight, sun.positionVector] = SunAngles(location.time,location.date,location.latitude,location.longitude);
 sun.intensityDistribution = PillBox(sun,simulation);
 sun.fullQuantization = 2*sun.halfQuantization + 1;
 
@@ -17,15 +16,16 @@ trough.rotAngle = 0; %deg2rad(sun.widthAngle);
 trough.height = TroughHeight(trough.focalLength,trough.width);
 trough.rimAngle = TroughRimAngle(trough.focalLength, trough.width);
 trough.coordinates = TroughCoordinates(trough, simulation);
-trough.gradients = SurfaceErrors(trough.coordinates,trough.surfaceStdDev);
+trough.gradients = SurfaceErrors(trough.coordinates,trough.surfaceStdDev,simulation);
 trough.coordinates = trough.coordinates(:,2:end-1); %throw away the coordinates no longer needed
 trough.fullQuantization = 2*trough.halfQuantization + 1;
 if trough.halfQuantization == 0; trough.specularity = 1; end;
 
 %compute receiver coordinates
 receiver.position = trough.focusCoordinates;
+receiver.length = trough.length;
 receiver.coordinates = RecieverCoordinates(receiver, simulation);
-receiver.gradients = ReceiverGradient(receiver);
+receiver.gradients = ReceiverGradient(receiver,simulation);
 
 %compute the receiver distribution
 receiverDistribution = ReceiverIntensityDistribution(simulation,trough,receiver,sun,atmosphere);

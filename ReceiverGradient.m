@@ -1,8 +1,8 @@
-function gradients = ReceiverGradient(receiver)
+function gradients = ReceiverGradient(receiver,simulation)
 %Computes the gradients of the receiver making sure it's a closed surface.
 %There are errors on the edges
 
-gradients = SurfaceErrors([receiver.coordinates(:,end) receiver.coordinates receiver.coordinates(:,1)],receiver.surfaceStdDev);
+gradients = SurfaceErrors([receiver.coordinates(:,end,:) receiver.coordinates receiver.coordinates(:,1,:)],receiver.surfaceStdDev,simulation);
 
 end
 

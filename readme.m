@@ -1,4 +1,4 @@
-% Version 4.1.
+% Version 5.0.
 % Frozen February 16, 2012 12:30 am.
 %Implements the following features
 %1.The simulation is only in 2D.
@@ -14,5 +14,4 @@
 %6. Specularity has been implemented
 
 %Bugs ang Technical
-%1. Added the ability to compute the Sun's angle at any time,date and
-%location
+%1. Tried making it fully 3D, but too hard to do now. Will pursue later.

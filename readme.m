@@ -1,5 +1,5 @@
-% Version 4.0.
-% Frozen February 12, 2012 05:00 pm.
+% Version 4.1.
+% Frozen February 16, 2012 12:30 am.
 %Implements the following features
 %1.The simulation is only in 2D.
 %2.The trough is a parabola. The receiver a circle with random
@@ -14,7 +14,5 @@
 %6. Specularity has been implemented
 
 %Bugs ang Technical
-%1. Changes receiver coordinates so they start from the top. Helps to make
-%it the distribution more continous.
-%2. Massively rewrote code to implement specularity.
-%3. Improved the gradient code.
+%1. Added the ability to compute the Sun's angle at any time,date and
+%location

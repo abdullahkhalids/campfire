@@ -7,11 +7,13 @@ constants;
 simulation.grainVolume = (simulation.grainLength)^2;
 
 %sun
-sun.positionVector = [sin(sun.positionAngle); cos(sun.positionAngle)];
+[sun.widthAngle sun.lengthAngle sun.daylight] = SunAngles(location.time,location.date,location.latitude,location.longitude);
+sun.positionVector = [sind(sun.widthAngle); cosd(sun.widthAngle)];
 sun.intensityDistribution = PillBox(sun,simulation);
 sun.fullQuantization = 2*sun.halfQuantization + 1;
 
 %compute trough coordinates
+trough.rotAngle = 0; %deg2rad(sun.widthAngle);
 trough.height = TroughHeight(trough.focalLength,trough.width);
 trough.rimAngle = TroughRimAngle(trough.focalLength, trough.width);
 trough.coordinates = TroughCoordinates(trough, simulation);

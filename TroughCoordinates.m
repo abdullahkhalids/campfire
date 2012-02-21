@@ -1,4 +1,4 @@
-function coordinates = TroughCoordinates(trough, simulation)
+function movRotCoord = TroughCoordinates(trough, simulation)
 %Computes the coordinates of all the points on the trough
 
 %rotation matrix
@@ -11,6 +11,12 @@ coord = -trough.width/2-simulation.grainLength:simulation.grainLength:trough.wid
 %Compute corresponding y for horizontal parabola
 coord(2,:) = coord.^2/(4*trough.focalLength);
 
+% figure;
+% hold on;
+% axis equal
+% axis([-simulation.size(1) simulation.size(1)  -simulation.size(2) simulation.size(2)]);
+% plot(coord(1,:),coord(2,:));
+
 %move focus to origin
 coord(2,:) = coord(2,:) - trough.focalLength;
 
@@ -19,21 +25,18 @@ coord(2,:) = coord(2,:) - trough.focalLength;
 %rotate the parabola around focus
 rotCoord = rotMat*coord;
 
+% plot(rotCoord(1,:),rotCoord(2,:));
+
+
 %move it
 movRotCoord = rotCoord + repmat(trough.focusCoordinates',1,size(rotCoord,2));
 
-%z coordinate
-z = -trough.length/2-simulation.grainLength:simulation.grainLength:trough.length/2+simulation.grainLength;
-
-x = repmat(movRotCoord(1,:),length(z),1);
-y = repmat(movRotCoord(2,:),length(z),1);
-z = repmat(z',1,size(coord,2));
-
-coordinates(:,:,1) = x;
-coordinates(:,:,2) = y;
-coordinates(:,:,3) = z;
-
-
+% figure;
+% hold on;
+% axis equal
+% axis([-simulation.size(1) simulation.size(1)  -simulation.size(2) simulation.size(2)]);
+% plot(movRotCoord(1,:),movRotCoord(2,:));
+%plot(trough.focusCoordinates(1),trough.focusCoordinates(2),'ko');
 
 
 end

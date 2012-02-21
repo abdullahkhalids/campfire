@@ -1,4 +1,4 @@
-function [alpha,beta,daytime,S] = SunAngles(time,date,latitude,longitude)
+function [alpha,beta,daytime] = SunAngles(time,date,latitude,longitude,timezoneLongitude)
 %Computes the position of the sun given the time,date,and location
 %time is in the 24 hour clock, in the form [hour min seconds] or just
 %hours.
@@ -35,17 +35,18 @@ dateDec = date + time/24;
 %Calculate the hour angle
 x = 360/365.242*(dateDec - 1);
 
+%Corrections to solar time
 EOT = 0.258*cosd(x) - 7.146*sind(x) - 3.648*cosd(2*x) - 9.228*sind(2*x);
+%Longitude correction
+LongitudeCorrection = 4*(timezoneLongitude - longitude);
+%Correction in hours
+Correction = (EOT + LongitudeCorrection)/60;
 
-solarTime = time + EOT/60;
+solarTime = time + Correction;
 
 hourAngle = 15*(solarTime - 12);
 
-
-
-
-daytime = 1;
-
+%Compute sun angles
 alpha = atand((cosd(solarDeclination)*sind(hourAngle))/(sind(latitude)*sind(solarDeclination) + cosd(latitude)*cosd(solarDeclination)*cosd(hourAngle)));
 beta = atand((cosd(latitude)*sind(solarDeclination) - sind(latitude)*cosd(solarDeclination)*cosd(hourAngle))/(sind(latitude)*sind(solarDeclination) + cosd(latitude)*cosd(solarDeclination)*cosd(hourAngle)));
 
@@ -54,9 +55,17 @@ if hourAngle<0
     alpha = -abs(alpha);
 end
 
-%Compute the vector for the sun
-S = [cosd(beta)*sind(alpha); cosd(beta)*cosd(alpha); sind(beta)*cosd(alpha)]/sqrt(cosd(beta)^2 + sind(beta)^2*cosd(alpha)^2);
+% %Compute the vector for the sun
+% S = [cosd(beta)*sind(alpha); cosd(beta)*cosd(alpha); sind(beta)*cosd(alpha)]/sqrt(cosd(beta)^2 + sind(beta)^2*cosd(alpha)^2);
 
+%Compute Sunrise and sunset angles
+sunInSkyAngle = acosd(-tand(latitude)*tand(solarDeclination));
+
+if abs(hourAngle) > abs(sunInSkyAngle)
+    daytime = 0;
+else
+    daytime = 1;
+end
 
 
 end

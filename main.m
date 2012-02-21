@@ -7,32 +7,35 @@ constants;
 simulation.grainVolume = (simulation.grainLength)^2;
 
 %sun
-[sun.widthAngle, sun.lengthAngle, sun.daylight, sun.positionVector] = SunAngles(location.time,location.date,location.latitude,location.longitude);
-sun.intensityDistribution = PillBox(sun,simulation);
+[sun.widthAngle sun.lengthAngle sun.daytime] = SunAngles(location.time,location.date,location.latitude,location.longitude,location.timezoneLongitude);
+sun.positionVector = [sind(sun.widthAngle); cosd(sun.widthAngle)];
 sun.fullQuantization = 2*sun.halfQuantization + 1;
+sun.irradiance = SolarIntensity(location.date, location.time); %W/m^2
+sun.intensityDistribution = PillBox(sun,simulation);
 
 %compute trough coordinates
-trough.rotAngle = 0; %deg2rad(sun.widthAngle);
+trough.rotAngle = deg2rad(sun.widthAngle);
 trough.height = TroughHeight(trough.focalLength,trough.width);
 trough.rimAngle = TroughRimAngle(trough.focalLength, trough.width);
 trough.coordinates = TroughCoordinates(trough, simulation);
-trough.gradients = SurfaceErrors(trough.coordinates,trough.surfaceStdDev,simulation);
+trough.gradients = SurfaceErrors(trough.coordinates,trough.surfaceStdDev);
 trough.coordinates = trough.coordinates(:,2:end-1); %throw away the coordinates no longer needed
 trough.fullQuantization = 2*trough.halfQuantization + 1;
 if trough.halfQuantization == 0; trough.specularity = 1; end;
 
 %compute receiver coordinates
 receiver.position = trough.focusCoordinates;
-receiver.length = trough.length;
 receiver.coordinates = RecieverCoordinates(receiver, simulation);
-receiver.gradients = ReceiverGradient(receiver,simulation);
+receiver.gradients = ReceiverGradient(receiver);
 
-%compute the receiver distribution
+%compute the receiver distribution for the 2D case
 receiverDistribution = ReceiverIntensityDistribution(simulation,trough,receiver,sun,atmosphere);
+
+%Compute the total flux for a 3D case
+[PowerReceiver, PowerTrough,InterceptFactor] = Flux3D(receiverDistribution,trough,receiver,sun,simulation);
 
 toc
 
-TotalEnergy = sum(receiverDistribution);
-Efficiency = TotalEnergy/(trough.width*sun.irradiance)*100;
-disp(['Power On Receiver = ' num2str(TotalEnergy) 'W'])
-disp(['Intercept Factor = ' num2str(Efficiency) '%']);
+disp(['Power On Receiver = ' num2str(PowerReceiver) 'W'])
+disp(['Intercept Factor = ' num2str(InterceptFactor*100) '%']);
+

@@ -1,5 +1,5 @@
-% Version 5.1.
-% Frozen February 21, 2012 10:50 am.
+% Version 5.2.
+% Frozen February 21, 2012 11:40 pm.
 %Implements the following features
 %1.The simulation is only in3D.
 %2.The trough is a parabola. The receiver a cyclinder with random
@@ -12,7 +12,4 @@
 %6. Specularity has been implemented
 
 %Bugs ang Technical
-%1. Made the model 3D using a 2D to 3D approximation.
-%2. Fixed a bug in the Solar angles calculation and added finding out if
-%it's daytime or not
-%3. Added a very rough solar Intensity model
+%1. Added a flawed receiver temperature model

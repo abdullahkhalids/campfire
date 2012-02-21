@@ -1,4 +1,3 @@
-clc; 
 tic
 %set up simulation constants
 constants;
@@ -12,6 +11,9 @@ sun.positionVector = [sind(sun.widthAngle); cosd(sun.widthAngle)];
 sun.fullQuantization = 2*sun.halfQuantization + 1;
 sun.irradiance = SolarIntensity(location.date, location.time); %W/m^2
 sun.intensityDistribution = PillBox(sun,simulation);
+
+%atmosphere
+atmosphere.temperature = AmbientTemperature(location.date,location.time);
 
 %compute trough coordinates
 trough.rotAngle = deg2rad(sun.widthAngle);
@@ -27,6 +29,7 @@ if trough.halfQuantization == 0; trough.specularity = 1; end;
 receiver.position = trough.focusCoordinates;
 receiver.coordinates = RecieverCoordinates(receiver, simulation);
 receiver.gradients = ReceiverGradient(receiver);
+receiver.troughLength = trough.length;
 
 %compute the receiver distribution for the 2D case
 receiverDistribution = ReceiverIntensityDistribution(simulation,trough,receiver,sun,atmosphere);
@@ -34,8 +37,13 @@ receiverDistribution = ReceiverIntensityDistribution(simulation,trough,receiver,
 %Compute the total flux for a 3D case
 [PowerReceiver, PowerTrough,InterceptFactor] = Flux3D(receiverDistribution,trough,receiver,sun,simulation);
 
+%Output temperature from receiver
+[receiverFluid.outletTemperature, receiverFluid.massFlowRate] = ReceiverTemperatureOutput(receiver, PowerReceiver, receiverFluid, atmosphere);
+
 toc
 
 disp(['Power On Receiver = ' num2str(PowerReceiver) 'W'])
 disp(['Intercept Factor = ' num2str(InterceptFactor*100) '%']);
+disp(['Output Temperature = ' num2str(receiverFluid.outletTemperature) ' C']);
+disp(['Mass Flow Rate = ' num2str(receiverFluid.massFlowRate) ' kg/s']);
 

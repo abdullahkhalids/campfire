@@ -1,4 +1,4 @@
-function [alpha,beta,daytime,S] = SunAngles(time,date,latitude,longitude,timezoneLongitude)
+function [alpha,beta,daytime] = SunAngles(time,date,latitude,longitude,timezoneLongitude)
 %Computes the position of the sun given the time,date,and location
 %time is in the 24 hour clock, in the form [hour min seconds] or just
 %hours.
@@ -56,7 +56,7 @@ if hourAngle<0
 end
 
 % %Compute the vector for the sun
-S = [cosd(beta)*sind(alpha); cosd(beta)*cosd(alpha); sind(beta)*cosd(alpha)]/sqrt(cosd(beta)^2 + sind(beta)^2*cosd(alpha)^2);
+% S = [cosd(beta)*sind(alpha); cosd(beta)*cosd(alpha); sind(beta)*cosd(alpha)]/sqrt(cosd(beta)^2 + sind(beta)^2*cosd(alpha)^2);
 
 %Compute Sunrise and sunset angles
 sunInSkyAngle = acosd(-tand(latitude)*tand(solarDeclination));
@@ -67,6 +67,8 @@ else
     daytime = 1;
 end
 
+
+end
 
 % Lat = latitude;
 % 
@@ -81,12 +83,8 @@ end
 % end
 % 
 % SunPos = [cosd(az)*sind(as); sind(az); -cosd(az)*cosd(as)];
-
-end
-
-
-
-
+% 
+% 
 % alpha = vectsangle([SunPos(1) SunPos(2) 0],[0 SunPos(2) 0]);
 % beta = -vectsangle([0 SunPos(2) SunPos(3)],[0 SunPos(2) 0]);
 % 

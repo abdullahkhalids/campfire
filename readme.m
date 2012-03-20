@@ -1,5 +1,5 @@
-% Version 5.3.
-% Frozen February 22, 2012 11:40 pm.
+% Version 6.0.
+% Frozen March 20, 2012 11:40 pm.
 %Implements the following features
 %1.The simulation is only in3D.
 %2.The trough is a parabola. The receiver a cyclinder with random
@@ -12,4 +12,4 @@
 %6. Specularity has been implemented
 
 %Bugs ang Technical
-%Some plotting code. Ignoring this version.
+%1. Remodeled the code files, splitting into folders

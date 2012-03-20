@@ -1,11 +1,9 @@
-clear all; close all;
-mislocation = 0.02;
-constants
-calculations;
+tic
+%get user simulation constants
+constants;
 
-    defaultStream = RandStream.getDefaultStream;
-    load('Z:\matlab\solar\randstream');
-    defaultStream.State = savedState;
+%rest of simulation parameters
+calculations;
 
 %compute the receiver distribution for the 2D case
 receiverDistribution = ReceiverIntensityDistribution(simulation,trough,receiver,sun,atmosphere);
@@ -14,9 +12,13 @@ receiverDistribution = ReceiverIntensityDistribution(simulation,trough,receiver,
 [PowerReceiver, PowerTrough,InterceptFactor] = Flux3D(receiverDistribution,trough,receiver,sun,simulation);
 
 %Output temperature from receiver
-%[receiverFluid.outletTemperature, receiverFluid.massFlowRate] = ReceiverTemperatureOutput(receiver, PowerReceiver, receiverFluid, atmosphere);
+collectorCycle.outletTemperature = ReceiverTemperature(receiver, PowerReceiver, collectorCycle, atmosphere);
+
+
+toc
 
 disp(['Power On Receiver = ' num2str(PowerReceiver) 'W'])
 disp(['Intercept Factor = ' num2str(InterceptFactor*100) '%']);
-% disp(['Output Temperature = ' num2str(receiverFluid.outletTemperature) ' C']);
-% disp(['Mass Flow Rate = ' num2str(receiverFluid.massFlowRate) ' kg/s']);
+disp(['Output Temperature increase = ' num2str(collectorCycle.outletTemperature- atmosphere.temperature) ' C']);
+disp(['Mass Flow Rate = ' num2str(collectorCycle.flowRate) ' kg/s']);
+

@@ -1,4 +1,4 @@
-function [T, MassFlowRate] = ReceiverTemperatureOutput(receiver, flux, receiverFluid, atmosphere)
+function T = ReceiverTemperatureOutput(receiver, flux, collectorCycle, atmosphere)
 
 
 sigma = 5.7*10^-8;
@@ -9,8 +9,8 @@ C = 2*pi*receiver.radius; %circumference of surface
 A = pi*receiver.radius^2; %area of crosssection
 D = 2*receiver.radius;
 
-T = atmosphere.temperature;
-for  x = 0:dt:receiver.troughLength/receiverFluid.speed
+T = collectorCycle.inletTemperature;
+for  x = 0:dt:receiver.troughLength/collectorCycle.speed
     
     %air film temperature
     Ts = (T + atmosphere.temperature)/2;
@@ -28,7 +28,7 @@ for  x = 0:dt:receiver.troughLength/receiverFluid.speed
     convectiveLoss = h*C*(T - atmosphere.temperature);
     radiativeLoss = receiver.emissivity*sigma*C*(T^4 - atmosphere.temperature^4);
     
-    dT = ((fluxIntensity - convectiveLoss - radiativeLoss)/(receiverFluid.density*A*receiverFluid.heatCapacity))*dt;
+    dT = ((fluxIntensity - convectiveLoss - radiativeLoss)/(collectorCycle.fluid.density*A*collectorCycle.fluid.heatCapacity))*dt;
     
     %Add to temperature
     T = T + dT;
@@ -36,9 +36,7 @@ for  x = 0:dt:receiver.troughLength/receiverFluid.speed
 end
 
 %Convert to celcius
-T = T - 273;
-
-MassFlowRate = pi*receiver.radius^2*receiverFluid.speed*1000;
+%T = T - 273;
 
 
 end

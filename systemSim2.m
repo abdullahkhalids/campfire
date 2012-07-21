@@ -1,6 +1,6 @@
 % clear all;
 % 
-% main;
+ main;
 
 for i=1:50
     

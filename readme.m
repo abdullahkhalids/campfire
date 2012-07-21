@@ -1,5 +1,5 @@
-% Version 6.0.
-% Frozen March 20, 2012 11:40 pm.
+% Version 6.1.
+% Frozen July 21, 2012 01:40 pm.
 %Implements the following features
 %1.The simulation is only in3D.
 %2.The trough is a parabola. The receiver a cyclinder with random
@@ -10,6 +10,7 @@
 %However, the refractive index is still considered to be wavelength
 %independent and the spectrum of the incoming sunlight is not considered.
 %6. Specularity has been implemented
+%7. Now a proper receiver model that works.
 
 %Bugs ang Technical
-%1. Remodeled the code files, splitting into folders
+

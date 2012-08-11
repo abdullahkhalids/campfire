@@ -1,4 +1,4 @@
-function indexes = ReceiverIntersections(gradientsReflected,trough,receiver,sun)
+function [indexes,isIntersection] = ReceiverIntersections(gradientsReflected,trough,receiver,sun)
 %Computes the indexes of the points on the receiver where the rays from the
 %trough are incident
 
@@ -6,7 +6,7 @@ function indexes = ReceiverIntersections(gradientsReflected,trough,receiver,sun)
 coordinates = expand(trough.coordinates,@(x)repmat(x,1,sun.fullQuantization*trough.fullQuantization));
 
 %Computes intersection with the receiver
-pointsIntersections = LineCircleIntersection(coordinates,gradientsReflected,receiver.radius,receiver.position);
+[pointsIntersections,isIntersection] = LineCircleIntersection(coordinates,gradientsReflected,receiver.radius,receiver.position);
 
 %compute the intersection coordinates using a nearest neighbour approach
 l = length(pointsIntersections);

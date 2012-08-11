@@ -1,4 +1,4 @@
-function pointsIntersections = LineCircleIntersection(coordinates,gradients,radius,center)
+function [pointsIntersections,isIntersection] = LineCircleIntersection(coordinates,gradients,radius,center)
 %Computes the first interesection between a set of lines and a circle
 
 %compute the determinent of the quadratic equation of intersection.
@@ -11,8 +11,8 @@ isIntersection = det >=0;
 %compute both points of intersection 
 intersections1 = isIntersection.*(-(gradients.*(c-center(2)) - center(1)) + sqrt(det)./(1 + gradients.^2));
 intersections2 = isIntersection.*(-(gradients.*(c-center(2)) - center(1)) - sqrt(det)./(1 + gradients.^2));
-intersections1(2,:) = gradients.*intersections1 + c;
-intersections2(2,:) = gradients.*intersections2 + c;
+intersections1(2,:) = isIntersection.*(gradients.*intersections1 + c);
+intersections2(2,:) = isIntersection.*(gradients.*intersections2 + c);
 
 %compute the squared distance between trough point and receiver point
 dis1 = SquareDistance(intersections1,coordinates);

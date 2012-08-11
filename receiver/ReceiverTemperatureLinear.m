@@ -1,8 +1,8 @@
-function [Tout,T] = ReceiverTemperature(receiver, flux, collectorCycle, atmosphere)
+function [Tout,T] = ReceiverTemperatureLinear(receiver, flux, collectorCycle, atmosphere,simulation)
 %Computes temperature of the output
 
-segmentLength = 0.1;
-m = ceil(receiver.troughLength/segmentLength);
+segmentLength = simulation.receiverSegmentLength;
+m = ceil(receiver.effectiveLength/segmentLength);
 
 fluxLengthIntensity = flux/receiver.length;
 Tin = collectorCycle.inletTemperature;

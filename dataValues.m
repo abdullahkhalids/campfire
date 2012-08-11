@@ -1,12 +1,12 @@
 %% Materials
 %aluminium
 aluminium = struct();
-aluminium.name = 'aluminium';
+aluminium.material = 'aluminium';
 aluminium.refractiveIndex = 1.26232 + 7.1855i; %at 0.6um
 
 %water
 water = struct();
-water.name = 'water';
+water.material = 'water';
 water.density = 1000; %kg/m^3
 water.heatCapacity = 4200; %J/kg.K
 water.latentHeatEvaporation = 2257e3; %J/kg
@@ -15,7 +15,7 @@ water.heatCapacityVapor = 2000; %J/kg.K
 
 %oil
 oil = struct();
-oil.name = 'oil';
+oil.material = 'oil';
 oil.density = 800; %kg/m^3
 oil.heatCapacity = 2000; %J/kg.K
 oil.heatConductivity = 0.15; %W/m.K
@@ -38,7 +38,7 @@ oil.densityTable.density = [888 876 864 852 840 829 817 806]; %kg.m^3
 
 %Freon R-12
 freon = struct();
-freon.name = 'freon';
+freon.material = 'freon';
 freon.density = 1400; %kg/m^3;
 freon.heatCapacity = 1000; %J/kg.K
 freon.latentHeatEvaporation = 165e3; %J/kg
@@ -47,7 +47,7 @@ freon.boilingPoint = 243; %K
 
 %Ethanol
 ethanol = struct();
-ethanol.name = 'ethanol';
+ethanol.material = 'ethanol';
 ethanol.density = 789; %kg/m^3
 ethanol.heatCapacity = 2434; %J/kg.K
 ethanol.latentHeatEvaporation = 846e3; %J/kg
@@ -56,7 +56,7 @@ ethanol.heatCapacityVapor = 1891; %J/kg.K
 
 %Ammonia
 ammonia = struct();
-ammonia.name = 'ammonia';
+ammonia.material = 'ammonia';
 ammonia.density = 789; %kg/m^3
 ammonia.heatCapacity = 2434; %J/kg.K
 ammonia.latentHeatEvaporation = 846e3; %J/kg
@@ -64,16 +64,20 @@ ammonia.boilingPoint = 351; % K
 ammonia.heatCapacityVapor = 1891; %J/kg.K
 
 %copper
-copper.emissivity = 0.88;
+copper.material = 'copper';
+copper.emissivity = 0.88; %units
 copper.thermalConductivity = 60; %W/mK
+copper.absorptance = 0.9;
 
 %Stainless Steel
+stainlessSteel.material = 'stainlessSteel';
 stainlessSteel.emissivity = 0.85;
 stainlessSteel.thermalConductivity = 17; %W/mK
 
 %air
 air = struct();
-air.name = 'air';
+air.material = 'air';
+air.refractiveIndex = 1;
 air.thermalConductivityTable = struct();
 air.thermalConductivityTable.name = 'thermalConductivity';
 air.thermalConductivityTable.temperature = [290 300 310 320 330 340 350 400 450 500 550 600 700 800 900 1000]; %K
@@ -92,12 +96,18 @@ air.thermalDiffusivityTable.thermalDiffusivity = [2.08 2.21 2.35 2.49 2.64 2.78 
 
 %butane
 butane = struct();
-butane.name = 'butane';
+butane.material = 'butane';
 butane.density = 601; %kg/m^3
 butane.heatCapacity = 2.31e3; %J/kg.K
 butane.latentHeatEvaporation = 385.2e3; %J/kg
 butane.boilingPoint = 272.66; %K
 butane.heatCapacityVapor = 1694; %J/kg.K
+
+%glass
+glass = struct();
+glass.material = 'glass';
+glass.emissivity = 0.86;
+glass.absorptance = 0.15;
 
 %% Environments and location
 %lahore

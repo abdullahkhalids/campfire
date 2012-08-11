@@ -7,7 +7,6 @@ sun.halfAngle = deg2rad(min2deg(16));
 sun.positionVector = [sind(sun.widthAngle); cosd(sun.widthAngle)]; %this is only the parabola
 sun.fullQuantization = 2*sun.halfQuantization + 1;
 sun.irradiance = SolarIntensity(location); %W/m^2
-%sun.intensityDistribution = PillBox(sun,simulation);
 
 %atmosphere
 atmosphere.temperature = setValueStructField(atmosphere,'temperature',AmbientTemperature(location));
@@ -25,12 +24,11 @@ trough.fullQuantization = 2*trough.halfQuantization + 1;
 if trough.halfQuantization == 0; trough.specularity = 1; end;
 
 %compute receiver stuff
-receiver.innerDiameterAbsorber = receiver.absorberDiameter - receiver.absorberThickness; %m
-receiver.outerDiameterAbsorber = receiver.absorberDiameter; %m
-receiver.innerDiameterGlassSleeve = receiver.glassSleeveDiameter - receiver.glassSleeveThickness; %m
-receiver.outerDiameterGlassSleeve = receiver.glassSleeveDiameter; %m
-
-receiver.radius = receiver.outerDiameterAbsorber;
+receiver.absorber.innerDiameter = receiver.absorber.diameter - receiver.absorber.thickness; %m
+receiver.absorber.outerDiameter = receiver.absorber.diameter; %m
+receiver.sleeve.innerDiameter = receiver.sleeve.diameter - receiver.sleeve.thickness; %m
+receiver.sleeve.outerDiameter = receiver.sleeve.diameter; %m
+receiver.radius = receiver.absorber.outerDiameter;
 receiver.length = trough.length + receiver.extraLength;
 receiver.position = trough.focusCoordinates + receiver.mislocation;
 receiver.coordinates = RecieverCoordinates(receiver, simulation);

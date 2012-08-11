@@ -4,7 +4,7 @@ function [Tout,T] = ReceiverTemperatureLinear(receiver, flux, collectorCycle, at
 segmentLength = simulation.receiverSegmentLength;
 m = ceil(receiver.effectiveLength/segmentLength);
 
-fluxLengthIntensity = flux/receiver.length;
+fluxLengthIntensity = flux/receiver.effectiveLength;
 Tin = collectorCycle.inletTemperature;
 T = zeros(m,5);
 Tguess = atmosphere.temperature*ones(1,5);
@@ -44,23 +44,22 @@ function F = heatBalanceEquations(T,Tin,fluxLengthIntensity,receiver,collectorCy
 
 g = atmosphere.gravity;
 sigma = 5.67e-8;
-D2 = receiver.innerDiameterAbsorber;
-D3 = receiver.outerDiameterAbsorber;
-D4 = receiver.innerDiameterGlassSleeve;
-D5 = receiver.outerDiameterGlassSleeve;
+D2 = receiver.absorber.innerDiameter;
+D3 = receiver.absorber.outerDiameter;
+D4 = receiver.sleeve.innerDiameter;
+D5 = receiver.sleeve.outerDiameter;
 
 
-%e2 = 0.88;
-e3 = 0.88;
-e4 = 0.86;
-e5 = 0.86;
 
-absorptanceGlass = 0.15;
-absorptanceAbsorber = 0.9;
+% e2 = receiver.absorber.emissivity;
+e3 = receiver.absorber.emissivity;
+e4 = receiver.sleeve.emissivity;
+e5 = receiver.sleeve.emissivity;
 
-q5sun = fluxLengthIntensity*absorptanceGlass;
-q3sun = fluxLengthIntensity*(1-absorptanceGlass)*absorptanceAbsorber;
 
+%radiation from sky to glass and to absorber
+q5sun = fluxLengthIntensity*receiver.sleeve.absorptance;
+q3sun = fluxLengthIntensity*(1 - receiver.sleeve.absorptance)*receiver.absorber.absorptance;
 
 %Convection from absorber to the fluid
 Nu1 = 4.36;
@@ -145,4 +144,3 @@ F(5) = (q3sun - q43rad - q43conv)*segmentLength/(collectorCycle.flowRate*collect
 F = real(F);
 
 end
-%%

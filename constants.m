@@ -14,7 +14,7 @@ trough.focusCoordinates = [0 0];
 trough.orientationAngle = 0;
 trough.width = 1;
 trough.length = 10;
-trough.refractiveIndex = aluminium.refractiveIndex;
+trough = mergeStructs(trough,aluminium);
 trough.surfaceStdDev = 10e-3; %rad
 trough.specularity = 0.85;
 trough.specularityStdDev = 5e-3;
@@ -23,17 +23,18 @@ trough.trackingError = deg2rad(0);
 
 %% Receiver Characteristics
 receiver = struct();
-receiver.absorberDiameter = 0.012; %m
-receiver.absorberThickness = 0.002; %m
-receiver.glassSleeveDiameter = 0.039; %m
-receiver.glassSleeveThickness = 0.02; %m
 receiver.extraLength = 0;
 receiver.surfaceStdDev = 0.5e-3;
-receiver.emissivity = copper.emissivity;
-receiver.absorber = copper;
-receiver.gas = air;
 receiver.mislocation = [0 0];
-
+receiver.absorber = struct();
+receiver.absorber = mergeStructs(receiver.absorber,copper);
+receiver.absorber.diameter = 0.012; %m
+receiver.absorber.thickness = 0.002; %m
+receiver.sleeve = struct();
+receiver.sleeve.diameter = 0.039; %m
+receiver.sleeve.thickness = 0.02; %m
+receiver.sleeve = mergeStructs(receiver.sleeve,glass);
+receiver.gas = air;
 
 %% Collector cycle
 collectorCycle = struct();
@@ -58,8 +59,8 @@ location.date = [21 6];
 location.time = [12 10];
 
 %% Atmosphere
-atmosphere = air;
-atmosphere.refractiveIndex = 1;
+atmosphere = struct();
+atmosphere = mergeStructs(atmosphere,air);
 atmosphere.gravity = 9.81;
 atmosphere.temperature = 'default';
 atmosphere.windSpeed = 'default';

@@ -15,10 +15,10 @@ atmosphere.pressure = setValueStructField(atmosphere,'pressure',atm2bar(1));
 
 %compute trough coordinates
 trough.rotAngle = deg2rad(sun.widthAngle) + trough.trackingError;
-trough.height = TroughHeight(trough.focalLength,trough.width);
-trough.rimAngle = TroughRimAngle(trough.focalLength, trough.width);
-trough.coordinates = TroughCoordinates(trough, simulation);
-trough.gradients = TroughGradient(trough.coordinates,trough.surfaceStdDev);
+trough.height = ParabolaHeight(trough.focalLength,trough.width);
+trough.rimAngle = ParabolaRimAngle(trough.focalLength, trough.width);
+trough.coordinates = ParabolaCoordinates(trough, simulation);
+trough.gradients = ParabolaGradient(trough.coordinates,trough.surfaceStdDev);
 trough.coordinates = trough.coordinates(:,2:end-1); %throw away the coordinates no longer needed
 trough.fullQuantization = 2*trough.halfQuantization + 1;
 if trough.halfQuantization == 0; trough.specularity = 1; end;
@@ -48,3 +48,9 @@ turbineCycle.turbineInletPressure = atmosphere.pressure;
 turbineCycle.turbineOutletPressure = atmosphere.pressure;
 turbineCycle.speed = fluidSpeed(turbineCycle.flowRate,receiver.radius,turbineCycle.fluid.density);
 turbineCycle.quality = 1;
+
+%Dish
+dish.refractiveIndex = aluminium.refractiveIndex;
+sun.vector = SunVector(sun);
+% dish.axisVector = DishAxisVector(dish);
+dish.axisVector = sun.vector;

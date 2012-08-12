@@ -1,4 +1,4 @@
-function movRotCoord = TroughCoordinates(trough, simulation)
+function movRotCoord = ParabolaCoordinates(trough, simulation)
 %Computes the coordinates of all the points on the trough
 
 %rotation matrix

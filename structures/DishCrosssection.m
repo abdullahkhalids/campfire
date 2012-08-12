@@ -13,8 +13,8 @@ crosssection.specularity = 0.85;
 crosssection.specularityStdDev = 5e-3;
 crosssection.halfQuantization = 1;
 crosssection.rotAngle = deg2rad(sun.widthAngle) + crosssection.trackingError;
-crosssection.coordinates = TroughCoordinates(crosssection, simulation);
-crosssection.gradients = TroughGradient(crosssection.coordinates,crosssection.surfaceStdDev);
+crosssection.coordinates = ParabolaCoordinates(crosssection, simulation);
+crosssection.gradients = ParabolaGradient(crosssection.coordinates,crosssection.surfaceStdDev);
 crosssection.coordinates = crosssection.coordinates(:,2:end-1); %throw away the coordinates no longer needed
 crosssection.fullQuantization = 2*crosssection.halfQuantization + 1;
 if crosssection.halfQuantization == 0; crosssection.specularity = 1; end;

@@ -1,8 +1,8 @@
-function s = TroughArcLength(trough)
+function s = ParabolaArcLength(focalLength,width)
 %Computes arc length of trough
 
-a = 1/(4*trough.focalLength);
-x= trough.width/2;
+a = 1/(4*focalLength);
+x = width/2;
 
 b = 2*a*x;
 

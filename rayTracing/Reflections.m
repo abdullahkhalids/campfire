@@ -17,7 +17,7 @@ vectorsReflected = vectorsIncidence - repmat(2*sum(vectorsIncidence.*normalsExpa
 vectorsReflection = RotateVectorsMat(vectorsReflected,material2.halfQuantization,abs(random('normal',0,material2.specularityStdDev,1,length(vectorsReflected))));
 
 %reflected intensities are reduced by the frenel coefficients
-intensitiesReflection = intensitiesIncidence.*frenelReflectionCoefficient(anglesIncidence,anglesTransmission,material1.refractiveIndex,material2.refractiveIndex,'mixed');
+intensitiesReflection = intensitiesIncidence.*FresnelReflectionCoefficient(anglesIncidence,anglesTransmission,material1.refractiveIndex,material2.refractiveIndex,'mixed');
 
 %then split into specular and non-specular rays
 base = (1-material2.specularity)/(2*material2.halfQuantization) * ones(1,material2.fullQuantization);

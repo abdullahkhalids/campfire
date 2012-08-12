@@ -72,3 +72,23 @@ heatExchanger.UA = 200;
 
 %% Turbine
 turbine.efficiency = 0.5;
+
+%%
+dish = struct();
+dish.focalLength = 0.2;
+dish.focusCoordinates = [0 0];
+dish.radius = 0.5;
+dish = mergeStructs(dish,aluminium);
+dish.surfaceStdDev = 10e-3; %rad
+dish.specularity = 0.85;
+dish.specularityStdDev = 5e-3;
+dish.halfQuantization = 1;
+
+
+% have to define conventions for these angles
+dish.yaw = 0; % x-y plane
+dish.pitch = 0; % z-y plane
+dish.roll = 0; % not needed
+
+
+

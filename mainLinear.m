@@ -17,7 +17,17 @@ collectorCycle.outletTemperature = ReceiverTemperatureLinear(receiver, PowerRece
 toc
 
 disp(['Power On Receiver = ' num2str(PowerReceiver) 'W'])
-disp(['Interceptrought Factor = ' num2str(InterceptFactor*100) '%']);
+disp(['Intercept Factor = ' num2str(InterceptFactor*100) '%']);
 disp(['Output Temperature increase = ' num2str(collectorCycle.outletTemperature- atmosphere.temperature) ' C']);
 disp(['Mass Flow Rate = ' num2str(collectorCycle.flowRate) ' kg/s']);
 
+%costs
+costs;
+
+[TotalCost individualCosts] = ComputeCosts(costTable,trough,receiver,collectorCycle);
+
+disp(['Trough Cost = Rs. ' num2str(individualCosts(1))]);
+disp(['Receiver Cost = Rs. ' num2str(individualCosts(2))])
+disp(['Collector Cycle Cost = Rs. ' num2str(individualCosts(3))])
+
+disp(['Total Cost = Rs. ' num2str(TotalCost)]);

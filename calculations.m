@@ -17,6 +17,8 @@ atmosphere.pressure = setValueStructField(atmosphere,'pressure',atm2bar(1));
 trough.rotAngle = deg2rad(sun.widthAngle) + trough.trackingError;
 trough.height = ParabolaHeight(trough.focalLength,trough.width);
 trough.rimAngle = ParabolaRimAngle(trough.focalLength, trough.width);
+trough.arcLength = ParabolaArcLength(trough.focalLength,trough.width);
+trough.area = trough.arcLength*trough.length;
 trough.coordinates = ParabolaCoordinates(trough, simulation);
 trough.gradients = ParabolaGradient(trough.coordinates,trough.surfaceStdDev);
 trough.coordinates = trough.coordinates(:,2:end-1); %throw away the coordinates no longer needed
@@ -29,7 +31,9 @@ receiver.absorber.outerDiameter = receiver.absorber.diameter; %m
 receiver.sleeve.innerDiameter = receiver.sleeve.diameter - receiver.sleeve.thickness; %m
 receiver.sleeve.outerDiameter = receiver.sleeve.diameter; %m
 receiver.radius = receiver.absorber.outerDiameter;
-receiver.length = trough.length + receiver.extraLength;
+receiver.length = trough.length + receiver.extraLength; %m
+receiver.absorber.length = receiver.length; %m
+receiver.sleeve.length = receiver.length; %m
 receiver.position = trough.focusCoordinates + receiver.mislocation;
 receiver.coordinates = RecieverCoordinates(receiver, simulation);
 receiver.gradients = ReceiverGradient(receiver);
@@ -39,6 +43,8 @@ collectorCycle.inletTemperature = setValueStructField(collectorCycle,'inletTempe
 collectorCycle.outletTemperature = setValueStructField(collectorCycle,'outletTemperature', atmosphere.temperature);
 collectorCycle.speed = fluidSpeed(collectorCycle.flowRate,receiver.radius,collectorCycle.fluid.density);
 collectorCycle.quality = 0;
+collectorCycle.volume = pi*(receiver.radius)^2*receiver.length*3; % 3 is an arbitrary factor here.
+collectorCycle.material = collectorCycle.fluid.material;
 
 %Turbine Cycle
 turbineCycle.turbineInletTemperature = atmosphere.temperature;
@@ -54,3 +60,6 @@ dish.refractiveIndex = aluminium.refractiveIndex;
 sun.vector = SunVector(sun);
 % dish.axisVector = DishAxisVector(dish);
 dish.axisVector = sun.vector;
+
+%Central receiver
+pointReceiver.temperature = atmosphere.temperature;

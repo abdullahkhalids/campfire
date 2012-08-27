@@ -109,6 +109,13 @@ glass.material = 'glass';
 glass.emissivity = 0.86;
 glass.absorptance = 0.15;
 
+%ceramic
+ceramic = struct();
+ceramic.material = 'ceramic';
+ceramic.heatCapacity = 850; %J/kg K
+ceramic.convectiveCoefficient = 100; %J/kg K
+ceramic.emissivity = 0.4;
+
 %% Environments and location
 %lahore
 lahore.latitude = [31 32 59]; %N

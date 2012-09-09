@@ -62,4 +62,22 @@ sun.vector = SunVector(sun);
 dish.axisVector = sun.vector;
 
 %Central receiver
+pointReceiver.aperatureArea = pi*pointReceiver.radius^2;
+pointReceiver.position = dish.focusCoordinates + pointReceiver.mislocation;
 pointReceiver.temperature = atmosphere.temperature;
+pointReceiver.volume = sqrt(pointReceiver.area/6)^3;
+pointReceiver.surfaceStdDev = 0;
+pointReceiver.coordinates = -pointReceiver.radius:simulation.grainLength:pointReceiver.radius; 
+pointReceiver.coordinates(2,:) = pointReceiver.position(2);
+% RecieverCoordinates(pointReceiver, simulation);
+pointReceiver.gradients = ReceiverGradient(pointReceiver);
+
+%Stirling receiver
+stirlingReceiver.aperatureArea = pi*pointReceiver.radius^2;
+stirlingReceiver.position = dish.focusCoordinates + pointReceiver.mislocation;
+stirlingReceiver.temperature = atmosphere.temperature;
+stirlingReceiver.volume = sqrt(pointReceiver.area/6)^3;
+stirlingReceiver.surfaceStdDev = 0;
+stirlingReceiver.coordinates = -pointReceiver.radius:simulation.grainLength:pointReceiver.radius; 
+stirlingReceiver.coordinates(2,:) = pointReceiver.position(2);
+stirlingReceiver.gradients = ReceiverGradient(pointReceiver);

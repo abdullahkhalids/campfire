@@ -1,4 +1,4 @@
-function [indexes,isIntersection] = ReceiverIntersections(gradientsReflected,trough,receiver,sun)
+function [indexes,isIntersection] = ReceiverIntersectionsLinear(gradientsReflected,trough,receiver,sun)
 %Computes the indexes of the points on the receiver where the rays from the
 %trough are incident
 

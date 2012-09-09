@@ -6,6 +6,7 @@ simulation = struct();
 simulation.size = [2 2];
 simulation.grainLength = 1e-3;
 simulation.receiverSegmentLength = 0.1;
+simulation.time = 60*60;
 
 %% Trough Characteristics
 trough = struct();
@@ -85,7 +86,7 @@ dish.name = 'dish';
 dish.type = 'sheet';
 dish.focalLength = 0.2;
 dish.focusCoordinates = [0 0];
-dish.radius = 0.5;
+dish.radius = 3;
 dish = mergeStructs(dish,aluminium);
 dish.surfaceStdDev = 10e-3; %rad
 dish.specularity = 0.85;
@@ -98,7 +99,21 @@ dish.roll = 0; % not needed
 
 %% Central receiver
 pointReceiver = struct();
-pointReceiver.aperatureArea = 0.15*0.15; %m^2
-pointReceiver.area = 0.15*0.15; %0.5*0.3*6; %m^2
+pointReceiver.radius = 0.05; %m %radius of aperature
+pointReceiver.area = 6*0.4*0.4; %0.5*0.3*6; %m^2
+pointReceiver.mislocation = [0 0];
 pointReceiver.mass = 10; %kg
 pointReceiver = mergeStructs(pointReceiver,ceramic);
+pointReceiver.pipe.length = 40; %m
+pointReceiver.pipe.radius = 0.0025; %m
+
+%% Stirling receiver
+stirlingReceiver = struct();
+stirlingReceiver.radius = 0.05; %m
+stirlingReceiver.area = 6*0.4*0.4; %m^2
+stirlingReceiver.mislocation = [0 0];
+stirlingReceiver.mass = 10; %kg
+stirlingReceiver = mergeStructs(stirlingReceiver,ceramic);
+stirlingReceiver.plate.length = 0.3; %m
+stirlingReceiver.plate.width = 0.005; %m
+stirlingReceiver.plate = mergeStructs(stirlingReceiver.plate,stainlessSteel);

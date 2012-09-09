@@ -115,6 +115,7 @@ ceramic.material = 'ceramic';
 ceramic.heatCapacity = 850; %J/kg K
 ceramic.convectiveCoefficient = 100; %J/kg K
 ceramic.emissivity = 0.4;
+ceramic.density = 2000;
 
 %% Environments and location
 %lahore

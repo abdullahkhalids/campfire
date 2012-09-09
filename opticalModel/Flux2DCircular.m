@@ -1,5 +1,5 @@
-function [indexes,isIntersection,intensitiesReflection] = Flux2D(parabola,receiver,sun,atmosphere,simulation)
-%FLUX2D Computes the flux on a parabola.
+function [indexes,isIntersection,intensitiesReflection] = Flux2DCircular(parabola,receiver,sun,atmosphere,simulation)
+%FLUX2DCIRCULAR Computes the flux on the dish receiver
 
 % The sun throws light rays at all points.
 % Compute the incidence angles, vectors and intensities
@@ -9,7 +9,7 @@ function [indexes,isIntersection,intensitiesReflection] = Flux2D(parabola,receiv
 [gradientsReflection,vectorsReflection,intensitiesReflection] = ReflectorReflections(atmosphere, parabola, anglesIncidence, vectorsIncidence,intensitiesIncidence); %#ok<ASGLU>
 
 %Compute where each reflected ray ends up on the receiver
-[indexes,isIntersection] = ReceiverIntersections(gradientsReflection,parabola,receiver,sun);
+[indexes,isIntersection] = ReceiverIntersectionsCircular(gradientsReflection,parabola,receiver,sun);
 
 
 

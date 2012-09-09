@@ -13,7 +13,7 @@ function [InterceptFactor,PowerReceiver, PowerReflector] = OpticalModelCircular(
 dish.crosssection = DishCrosssection(dish,sun,simulation);
 
 %% 2D Optical Model
-[indexes,isIntersection,intensitiesReflection] = Flux2D(dish.crosssection,receiver,sun,atmosphere,simulation);
+[indexes,isIntersection,intensitiesReflection] = Flux2DCircular(dish.crosssection,receiver,sun,atmosphere,simulation);
 
 %% 3D Optical Model
 [InterceptFactor,PowerReceiver, PowerReflector] = Flux3DCircular(indexes,isIntersection,intensitiesReflection,dish,receiver,sun,simulation);

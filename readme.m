@@ -1,5 +1,5 @@
-% Version 7.0.
-% Frozen August 28, 2012 3:30 am.
+% Version 7.1.
+% Frozen September 9, 2012 11:30 pm.
 
 % This version is serious refactoring of the code, and is moving towards a
 % public API version. It now implements an optical model for both a
@@ -13,7 +13,4 @@
 % symmetry.
 
 % New
-% * A thermal model for the dish
-% * Some primitive ability to compute costs
-% * Two new functions LinearCollector and Circular Collector which allow
-% the user to compute results with just these.
+% * Modified and fixed thermal model for dish

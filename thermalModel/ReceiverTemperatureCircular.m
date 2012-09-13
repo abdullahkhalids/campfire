@@ -1,7 +1,6 @@
 function [TempFluidOut,TempReceiverOut] = ReceiverTemperatureCircular(receiver,PowerReceiver,collectorCycle,atmosphere,simulation)
 %RECEIVERTEMPERATURECENTRAL Computes the steady state temperature of a
 %central dish receiver using the input heat flux.
-% time is in sec
 
 TempReceiverIn = receiver.temperature;
 TempFluidIn = collectorCycle.inletTemperature;

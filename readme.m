@@ -1,5 +1,5 @@
-% Version 7.1.
-% Frozen September 9, 2012 11:30 pm.
+% Version 7.2.
+% Frozen September 14, 2012 03:00 am.
 
 % This version is serious refactoring of the code, and is moving towards a
 % public API version. It now implements an optical model for both a

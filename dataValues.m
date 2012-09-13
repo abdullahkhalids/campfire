@@ -73,6 +73,8 @@ copper.absorptance = 0.9;
 stainlessSteel.material = 'stainlessSteel';
 stainlessSteel.emissivity = 0.85;
 stainlessSteel.thermalConductivity = 17; %W/mK
+stainlessSteel.density = 8030; %kg/m^3
+stainlessSteel.heatCapacity = 500; %J/kg K
 
 %air
 air = struct();

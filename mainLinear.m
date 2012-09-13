@@ -11,7 +11,7 @@ calculations;
 [InterceptFactor,PowerReceiver, PowerTrough, receiver.effectiveLength] = OpticalModelLinear(simulation,trough,receiver,sun,atmosphere);
 
 %Output temperature from receiver
-collectorCycle.outletTemperature = ReceiverTemperatureLinear(receiver, PowerReceiver, collectorCycle, atmosphere,simulation);
+% collectorCycle.outletTemperature = ReceiverTemperatureLinear(receiver, PowerReceiver, collectorCycle, atmosphere,simulation);
 
 
 toc
@@ -22,12 +22,12 @@ disp(['Output Temperature increase = ' num2str(collectorCycle.outletTemperature-
 disp(['Mass Flow Rate = ' num2str(collectorCycle.flowRate) ' kg/s']);
 
 %costs
-costs;
-
-[TotalCost individualCosts] = ComputeCosts(costTable,trough,receiver,collectorCycle);
-
-disp(['Trough Cost = Rs. ' num2str(individualCosts(1))]);
-disp(['Receiver Cost = Rs. ' num2str(individualCosts(2))])
-disp(['Collector Cycle Cost = Rs. ' num2str(individualCosts(3))])
-
-disp(['Total Cost = Rs. ' num2str(TotalCost)]);
+% costs;
+% 
+% [TotalCost individualCosts] = ComputeCosts(costTable,trough,receiver,collectorCycle);
+% 
+% disp(['Trough Cost = Rs. ' num2str(individualCosts(1))]);
+% disp(['Receiver Cost = Rs. ' num2str(individualCosts(2))])
+% disp(['Collector Cycle Cost = Rs. ' num2str(individualCosts(3))])
+% 
+% disp(['Total Cost = Rs. ' num2str(TotalCost)]);

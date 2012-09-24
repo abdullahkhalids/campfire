@@ -6,8 +6,8 @@ m = ceil(receiver.effectiveLength/segmentLength);
 
 fluxLengthIntensity = flux/receiver.effectiveLength;
 Tin = collectorCycle.inletTemperature;
-T = zeros(m,5);
-Tguess = collectorCycle.inletTemperature*ones(1,5);
+T = zeros(m,3);
+Tguess = collectorCycle.inletTemperature*ones(1,3);
 options=optimset('Display','Off','TolFun',1e-4,'TolX',1e-4);
 
 % mass flow rate remains constant because of pump
@@ -32,14 +32,13 @@ Tout = Tin;
 
 end
 
-%%
+%
 function F = heatBalanceEquations(T,Tin,fluxLengthIntensity,receiver,collectorCycle,atmosphere,segmentLength)
 
 %1:fluid
 %2:absorber inner
 %3:absorber outer
-%4:glass inner
-%5:glass outer
+
 %6:air
 %7:sky
 
@@ -47,18 +46,14 @@ g = atmosphere.gravity;
 sigma = 5.67e-8;
 D2 = receiver.absorber.innerDiameter;
 D3 = receiver.absorber.outerDiameter;
-D4 = receiver.sleeve.innerDiameter;
-D5 = receiver.sleeve.outerDiameter;
+
 Da = receiver.annulus.diameter;
 
-% e2 = receiver.absorber.emissivity;
 e3 = receiver.absorber.emissivity;
-e4 = receiver.sleeve.emissivity;
-e5 = receiver.sleeve.emissivity;
 
-%radiation from sky to glass and to absorber
-q5sun = fluxLengthIntensity*receiver.sleeve.absorptance;
-q3sun = fluxLengthIntensity*(1 - receiver.sleeve.absorptance)*receiver.absorber.absorptance;
+
+%radiation from sky to absorber
+q3sun = fluxLengthIntensity*receiver.absorber.absorptance;
 
 %Convection from absorber to the fluid
 viscosity = materialProperty(collectorCycle.fluid.viscosityTable,T(1));
@@ -96,40 +91,12 @@ q12conv = h1*D2*pi*(T(2)-T(1));
 k23 = receiver.absorber.thermalConductivity;
 q23cond = 2*pi*k23*(T(3) - T(2))/log(D3/D2);
 
-
-%Convection from aborber outer to glass inner
-if strcmp(receiver.gas.material,'air')
-    %for air in annulus
-    T34 = average(T(3),T(4));
-    beta34 = 1/T34;
-    alpha34 = materialProperty(receiver.gas.thermalDiffusivityTable,T34);
-    viscosity34 = materialProperty(receiver.gas.viscosityTable,T34);
-    Pr34 = materialProperty(receiver.gas.prandtlNumberTable,T34);
-    k34 = materialProperty(receiver.gas.thermalConductivityTable,T34);
-    RaD3 = g*(T(3) - T(4))*D3^3*beta34/(alpha34*viscosity34);
-    q43conv = 2.425*k34*(T(3) - T(4))*(Pr34*RaD3/(0.861 + Pr34))^(1/4)/(1 + (D3/D4)^(3/5))^(5/4);
-elseif strcmp(receiver.gas.material,'vacuum')
-    %for vacum in annulus
-    h34 = 0.0001115; %for air for pressures <0.0001 torr\
-    q43conv = pi*D3*h34*(T(3)-T(4));
-elseif strcmp(receiver.gas.material,'hydrogen')
-    h34 = 0.0003551; %for hyrdogen for pressures <0.0001 torr
-    q43conv = pi*D3*h34*(T(3)-T(4));
-end
-
-%Radiation from absorber outer to glass inner
-q43rad = sigma*pi*D3*(T(3)^4 - T(4)^4)/(1/e3 + (1 - e4)*D3/(e4*D4));
-
-%Conduction within glass from inner to outer
-k45 = 1.1; %pyrex
-q54cond = 2*pi*k45*(T(4) - T(5))/log(D5/D4);
-
-%Convection from glass to air
+%Convection from absorber to air
 vis6 = materialProperty(atmosphere.viscosityTable,atmosphere.temperature);
-Pr5 = materialProperty(atmosphere.prandtlNumberTable,T(5));
+Pr5 = materialProperty(atmosphere.prandtlNumberTable,T(3));
 Pr6 = materialProperty(atmosphere.prandtlNumberTable,atmosphere.temperature);
 v = atmosphere.windSpeed;
-Re = v*D5/vis6;
+Re = v*D3/vis6;
 if Re<=40
     C = 0.75;
     m = 0.4;
@@ -150,17 +117,17 @@ else
     n = 0.36;
 end
 
-Nu56Wind = C*Re^m*Pr6^n*(Pr6/Pr5)^(1/4);
+Nu36Wind = C*Re^m*Pr6^n*(Pr6/Pr5)^(1/4);
 
-T56 = average(T(5),atmosphere.temperature);
-k56 = materialProperty(atmosphere.thermalConductivityTable,T56);
-h56 = Nu56Wind*k56/D5;
+T36 = average(T(3),atmosphere.temperature);
+k36 = materialProperty(atmosphere.thermalConductivityTable,T36);
+h36 = Nu36Wind*k36/D3;
 
-q65conv = h56*pi*D5*(T(5) - atmosphere.temperature);
+q63conv = h36*pi*D3*(T(3) - atmosphere.temperature);
 
-%Radiation from glass to sky
+%Radiation from absorber to sky
 Tsky = atmosphere.temperature - 8;
-q75rad = sigma*D5*pi*e5*(T(5)^4 - Tsky^4);
+q73rad = sigma*D3*pi*e3*(T(3)^4 - Tsky^4);
 
 %heat loss from bracket
 Tbase = T(3)-10;
@@ -198,11 +165,8 @@ qbracket = receiver.nBrackets*sqrt(h_bracket*Peri_b*kb*A_cs)*(Tbase - atmosphere
 
 %% Equations
 F(1) = q12conv - q23cond;
-F(2) = q3sun - q23cond - q43conv - q43rad;
-F(3) = q43rad + q43conv - q54cond;
-F(4) = q5sun + q54cond - q75rad - q65conv;
-F(5) = (q12conv*segmentLength - qbracket)/(massflowRate*materialProperty(collectorCycle.fluid.heatCapacityTable,T(1))) + 2*(Tin - T(1));
-
+F(2) = q3sun - q23cond - q63conv - q73rad; 
+F(3) = (q12conv*segmentLength - qbracket)/(massflowRate*materialProperty(collectorCycle.fluid.heatCapacityTable,T(1))) + 2*(Tin - T(1));
 F = real(F);
 
 

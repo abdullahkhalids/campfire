@@ -4,8 +4,7 @@ legendText = char();
 
 %get user simulation constants
 constants;
-% receiver.emissivity = stainlessSteel.emissivity;
-% receiver.absorber = stainlessSteel;
+
 
 %Set up vectors of changed paramters
 radius = [0.005:0.005:0.06];
@@ -21,24 +20,17 @@ for r = radius;
     load('Z:\matlab\solar\randstream');
     defaultStream.State = savedState;
 
-    receiver.innerDiameterAbsorber = r;
-
-    receiver.outerDiameterAbsorber = receiver.innerDiameterAbsorber + 0.002; %m
-    receiver.innerDiameterGlassSleeve = receiver.outerDiameterAbsorber + 0.02; %m
-    receiver.outerDiameterGlassSleeve = receiver.innerDiameterGlassSleeve + 0.007; %m
-
     %rest of simulation parameters
     calculations;
 
     %post calculation paramters
     collectorCycle.inletTemperature = 273 + T;
 
-    %compute the receiver distribution for the 2D case
-    receiverDistribution = ReceiverIntensityDistribution(simulation,trough,receiver,sun,atmosphere);
-    %Compute the total flux for a 3D case
-    [PowerReceiver, PowerTrough,InterceptFactor] = Flux3D(receiverDistribution,trough,receiver,sun,simulation);
+    %optical model
+    [InterceptFactor,PowerReceiver, PowerTrough, receiver.effectiveLength] = OpticalModelLinear(simulation,trough,receiver,sun,atmosphere);
+
     %Output temperature from receiver
-    collectorCycle.outletTemperature = ReceiverTemperatureOutput(receiver, PowerReceiver, collectorCycle, atmosphere);
+    collectorCycle.outletTemperature = ReceiverTemperatureLinear(receiver, PowerReceiver, collectorCycle, atmosphere,simulation);
 
     %Store important outputs
     Tinc(i) = collectorCycle.outletTemperature - collectorCycle.inletTemperature;

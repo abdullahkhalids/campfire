@@ -75,7 +75,8 @@ for k=1:length(costTable.(type))
         unitCost = costTable.(type)(k).cost;
         numberUnits = 1;
         for i=1:length(nonexactPropertiesList)
-            factor = ceil(component.(nonexactPropertiesList{i})/costTable.(type)(k).(nonexactPropertiesList{i}));
+            %             factor = ceil(component.(nonexactPropertiesList{i})/costTable.(type)(k).(nonexactPropertiesList{i}));
+            factor = component.(nonexactPropertiesList{i})/costTable.(type)(k).(nonexactPropertiesList{i});            
             numberUnits = numberUnits*factor;
         end
         cost = unitCost*numberUnits;

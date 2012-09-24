@@ -11,18 +11,18 @@ simulation.time = 60*60;
 %% Trough Characteristics
 trough = struct();
 trough.name = 'trough';
-trough.focalLength = 0.3;
+trough.focalLength = 0.23;
 trough.focusCoordinates = [0 0];
 trough.orientationAngle = 0;
-trough.width = 1;
-trough.length = 12.5;
+trough.width = 1.1;
+trough.length = 167; %2.44;
 trough = mergeStructs(trough,aluminium);
-trough.surfaceStdDev = 12e-3; %rad
+trough.surfaceStdDev = 10e-3; %rad
 trough.specularity = 0.9;
 trough.specularityStdDev = 2e-3;
 trough.halfQuantization = 1;
-trough.trackingError = deg2rad(1.5);
-trough.reflectivity = 0.8;
+trough.trackingError = deg2rad(1);
+trough.reflectivity = 0.75;
 trough.reflector.type = 'sheet';
 
 %% Receiver Characteristics
@@ -44,14 +44,14 @@ receiver.sleeve = mergeStructs(receiver.sleeve,glass);
 receiver.gas = air;
 receiver.annulusCheck = true;
 receiver.annulus = struct();
-receiver.annulus.diameter = 0.020; %m
-receiver.bracketSpacing = 4;
+receiver.annulus.diameter = 0.033; %m
+receiver.bracketSpacing = 10;
 
 %% Collector cycle
 collectorCycle = struct();
-collectorCycle.fluid = syltherm;
-collectorCycle.flowRate = 2/60/1000; %m^3/s 
-collectorCycle.inletTemperature = celcius2kelvin(30);
+collectorCycle.fluid = water;
+collectorCycle.flowRate = 6.4/60/1000; % 0.5; %m^3/s 1g/m-->0.00378541*60m^3/s 
+collectorCycle.inletTemperature = celcius2kelvin(26.8);
 collectorCycle.outletTemperature = 'default';
 collectorCycle.type = 'fluid';
 
@@ -68,15 +68,15 @@ sun.irradiance = 600;
 
 %% Location
 location = lahore;
-location.date = [21 6];
-location.time = [12 10];
+location.date = [20 11];
+location.time = [13 20];
 
 %% Atmosphere
 atmosphere = struct();
 atmosphere = mergeStructs(atmosphere,air);
 atmosphere.gravity = 9.81;
-atmosphere.temperature = celcius2kelvin(25);
-atmosphere.windSpeed = 1;
+atmosphere.temperature = celcius2kelvin(26.0);
+atmosphere.windSpeed = 4.2;
 atmosphere.pressure = 'default';
 
 %% trough structure

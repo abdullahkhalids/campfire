@@ -1,5 +1,5 @@
-% Version 7.4.
-% Frozen December 19, 2012 9:00 pm.
+% Version 7.5.
+% Frozen December 19, 2012 11:30 pm.
 
 % Please start with constants.m. Define the properties of your system. Most
 % properties are self explanatory.
@@ -9,4 +9,4 @@
 % symmetry.
 
 % New
-% * Improved SunAngles to account for rotated trough
+% * Merged thermal model code with Hassan's corrections

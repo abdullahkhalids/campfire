@@ -1,7 +1,6 @@
 function [Tplus Tminus] = errorAnalysis(structure,parameter,delta)
 %ERRORANALYSIS
 
-
 warning off;
 
 for i='+-'

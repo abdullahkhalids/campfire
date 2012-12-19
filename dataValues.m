@@ -189,3 +189,11 @@ lahore.timezoneLongitude = 75; %E
 lahore.monthlyIntensities = [180.96 221.22 238.40 272.16 281.71 297.76 266.31 246.74 270.63 235.60 201.71 169.01]*3.155; %kw/m^2
 lahore.monthlyTemperatures = [18 22 27 34 39 38 35 34 34 32 27 21]+273.16; %K
 lahore.windSpeed = 0.05; %m/s
+
+%% Fuels
+%diesel
+diesel.heatingValue = 43.1e6; %MJ/kg
+diesel.massPrice = 109; %Rs/kg
+
+%suigas
+suigas.joulePrice = 460/1.06e9; %Rs/J

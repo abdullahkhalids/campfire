@@ -5,11 +5,19 @@ sheet(1).material = 'aluminium';
 sheet(1).width = 1;
 sheet(1).length = 1;
 sheet(1).cost = 540;
+sheet(2).material = 'alref1';
+sheet(2).width = 1;
+sheet(2).length = 1;
+sheet(2).cost = 540+1500;
+sheet(3).material = 'alref2';
+sheet(3).width = 1;
+sheet(3).length = 1;
+sheet(3).cost = 540+3000;
 
 % pipes
 pipe = struct();
 % galvanized iron, Light
-materialname1 = 'badchrome';
+materialname1 = 'cermet';
 pipe(1).material = materialname1;
 pipe(1).diameter = 0.015;
 pipe(1).thickness = 0.0020;

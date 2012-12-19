@@ -52,45 +52,9 @@ collectorCycle.quality = 0;
 collectorCycle.volume = pi*(receiver.radius)^2*receiver.length*3; % 3 is an arbitrary factor here.
 collectorCycle.material = collectorCycle.fluid.material;
 
-%troughStructure
-troughStructure.length = trough.length*ceil(trough.width/troughStructure.widthInterval);
+%Field
+field.columnFlowRate = field.totalFlowRate/field.parallel;
+field.nTroughs = field.parallel*field.series;
 
-
-
-%Turbine Cycle
-turbineCycle.turbineInletTemperature = atmosphere.temperature;
-turbineCycle.turbineOutletTemperature = atmosphere.temperature;
-turbineCycle.inletTemperature = atmosphere.temperature;
-turbineCycle.turbineInletPressure = atmosphere.pressure;
-turbineCycle.turbineOutletPressure = atmosphere.pressure;
-% turbineCycle.speed = fluidSpeed(turbineCycle.flowRate,receiver.radius,turbineCycle.fluid.density);
-turbineCycle.quality = 1;
-
-%Dish
-dish.refractiveIndex = aluminium.refractiveIndex;
-sun.vector = SunVector(sun);
-% dish.axisVector = DishAxisVector(dish);
-dish.axisVector = sun.vector;
-
-%Central receiver
-pointReceiver.aperatureArea = pi*pointReceiver.radius^2;
-pointReceiver.position = dish.focusCoordinates + pointReceiver.mislocation;
-pointReceiver.temperature = atmosphere.temperature;
-pointReceiver.volume = sqrt(pointReceiver.area/6)^3;
-pointReceiver.surfaceStdDev = 0;
-pointReceiver.coordinates = -pointReceiver.radius:simulation.grainLength:pointReceiver.radius; 
-pointReceiver.coordinates(2,:) = pointReceiver.position(2);
-% RecieverCoordinates(pointReceiver, simulation);
-pointReceiver.gradients = ReceiverGradient(pointReceiver);
-
-%Stirling receiver
-stirlingReceiver.aperatureArea = pi*pointReceiver.radius^2;
-stirlingReceiver.position = dish.focusCoordinates + pointReceiver.mislocation;
-stirlingReceiver.temperature = atmosphere.temperature;
-stirlingReceiver.volume = sqrt(pointReceiver.area/6)^3;
-stirlingReceiver.surfaceStdDev = 0;
-stirlingReceiver.coordinates = -pointReceiver.radius:simulation.grainLength:pointReceiver.radius; 
-stirlingReceiver.coordinates(2,:) = pointReceiver.position(2);
-stirlingReceiver.gradients = ReceiverGradient(pointReceiver);
-stirlingReceiver.plate.temperature = atmosphere.temperature;
-stirlingReceiver.plate.volume = (stirlingReceiver.plate.length)^2*stirlingReceiver.plate.width;
+% %troughStructure
+% troughStructure.length = trough.length*ceil(trough.width/troughStructure.widthInterval);

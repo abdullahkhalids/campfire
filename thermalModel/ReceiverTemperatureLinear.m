@@ -84,6 +84,7 @@ if ReD2>2300
     
     Nu1 = ((f2/8)*(ReD2 - 1000)*Pr1)/(1 + 12.7*sqrt(f2/8)*(Pr1^(2/3)-1))*(Pr1/Pr2)^0.11;
     h1 = Nu1*k1/DH;
+    
 else
     annulusRatio = Da/receiver.absorber.innerDiameter;
     Nu1 = interp1([0 0.05 0.1 0.2 0.4 0.6 0.8 1], [4.364 4.792 4.834 4.833 4.979 5.099 5.24 5.385],annulusRatio);
@@ -91,7 +92,7 @@ else
     h1 = Nu1*k1/D2;
 end
 
-q12conv = h1*D2*pi*(T(2)-T(1));
+q12conv = h1*DH*pi*(T(2)-T(1));
 
 %Conduction in absorber from outer to inner
 k23 = receiver.absorber.thermalConductivity;
@@ -195,14 +196,15 @@ Nu_bracket= C*Re^m*Pr6_bracket^n*(Pr6_bracket/Pr5_bracket)^(1/4);
 Peri_b =0.2032; A_cs = 1.613e-4; kb = 48e-3; 
 
 h_bracket = Nu_bracket*kb/D_bracket;
-qbracket = receiver.nBrackets*sqrt(h_bracket*Peri_b*kb*A_cs)*(Tbase - atmosphere.temperature)/segmentLength;
+L_b = 4;
+qbracket = receiver.nBrackets*sqrt(h_bracket*Peri_b*kb*A_cs)*(Tbase - atmosphere.temperature)/L_b;
 
 %% Equations
 F(1) = q12conv - q23cond;
 F(2) = q3sun - q23cond - q43conv - q43rad;
 F(3) = q43rad + q43conv - q54cond;
 F(4) = q5sun + q54cond - q75rad - q65conv;
-F(5) = (q12conv*segmentLength - qbracket)/(massflowRate*materialProperty(collectorCycle.fluid.heatCapacityTable,T(1))) + 2*(Tin - T(1));
+F(5) = (q12conv*segmentLength- qbracket)/(massflowRate*materialProperty(collectorCycle.fluid.heatCapacityTable,T(1))) + 2*(Tin - T(1));
 
 F = real(F);
 

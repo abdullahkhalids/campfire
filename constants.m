@@ -15,14 +15,15 @@ trough.focalLength = 0.3;
 trough.focusCoordinates = [0 0];
 trough.orientationAngle = 0;
 trough.width = 1;
-trough.length = 12.5;
+trough.length = 2.5;
 trough = mergeStructs(trough,aluminium);
+trough.material = 'alref1';
 trough.surfaceStdDev = 12e-3; %rad
 trough.specularity = 0.9;
 trough.specularityStdDev = 2e-3;
 trough.halfQuantization = 1;
 trough.trackingError = deg2rad(0);
-trough.reflectivity = 0.8;
+trough.reflectivity = 0.85; % 0.95
 trough.reflector.type = 'sheet';
 trough.bearing = 0;
 
@@ -34,12 +35,12 @@ receiver.surfaceStdDev = 0.5e-3;
 receiver.mislocation = [0 0];
 receiver.absorber = struct();
 receiver.absorber.type = 'pipe';
-receiver.absorber = mergeStructs(receiver.absorber,badchrome);
+receiver.absorber = mergeStructs(receiver.absorber,cermet);
 receiver.absorber.diameter = 0.050; %m
 receiver.absorber.thickness = 0.0029; %m
 receiver.sleeve = struct();
 receiver.sleeve.type = 'pipe';
-receiver.sleeve.diameter = 0.100; %m
+receiver.sleeve.diameter = 0.110; %m
 receiver.sleeve.thickness = 0.002; %m
 receiver.sleeve = mergeStructs(receiver.sleeve,glass);
 receiver.gas = air;
@@ -52,15 +53,24 @@ receiver.bracketSpacing = 4;
 collectorCycle = struct();
 collectorCycle.fluid = water;
 collectorCycle.flowRate = 1/60/1000; % 0.5; %m^3/s 1g/m-->0.00378541*60m^3/s 
-collectorCycle.inletTemperature = celcius2kelvin(30);
+collectorCycle.inletTemperature = celcius2kelvin(25);
 collectorCycle.outletTemperature = 'default';
 collectorCycle.type = 'fluid';
 
-%% Turbine cycle
-turbineCycle = struct();
-turbineCycle.fluid = butane;
-turbineCycle.flowRate = 0.001; %kg/s 0.005
-turbineCycle.quality = 0;
+%% Field
+field = struct();
+field.life = 5; %years
+field.maintainencePercentage = 5e-2; % percentage
+field.series = 1;
+field.parallel = 50;
+field.totalFlowRate = 10/60/1000; %m^3/s
+field.inletTemperature = celcius2kelvin(25);
+field.desiredTemperature = celcius2kelvin(80);
+field.performanceHours = [9 11 1 3];
+field.representativeHours = 2; %fix this
+field.performanceMonths = [1 4 7 10];
+field.representativeMonths = 3;
+field.transmissionLoss = 0.85;
 
 %% Sun Characteristics
 sun = struct();
@@ -70,7 +80,7 @@ sun.irradiance = 600;
 %% Location
 location = lahore;
 location.date = [21 6];
-location.time = [8 10];
+location.time = [12 10];
 
 %% Atmosphere
 atmosphere = struct();
@@ -80,56 +90,15 @@ atmosphere.temperature = celcius2kelvin(25);
 atmosphere.windSpeed = 1;
 atmosphere.pressure = 'default';
 
-%% trough structure
-troughStructure = struct();
-troughStructure.type = 'pipe';
-troughStructure.material = 'ssrod';
-troughStructure.diameter = 0.01;
-troughStructure.thickness = 0.01;
-troughStructure.widthInterval = 0.2;
+%% alternate fuel
+alternateFuel = suigas;
+alternateFuel.heaterEffeciency =1; %percentage
 
-%% Heat Exchangers
-heatExchanger = struct();
-heatExchanger.UA = 200;
+% %% trough structure
+% troughStructure = struct();
+% troughStructure.type = 'pipe';
+% troughStructure.material = 'ssrod';
+% troughStructure.diameter = 0.01;
+% troughStructure.thickness = 0.01;
+% troughStructure.widthInterval = 0.2;
 
-%% Turbine
-turbine.efficiency = 0.5;
-
-%% Dish
-dish = struct();
-dish.name = 'dish';
-dish.type = 'sheet';
-dish.focalLength = 0.2;
-dish.focusCoordinates = [0 0];
-dish.radius = 3;
-dish = mergeStructs(dish,aluminium);
-dish.surfaceStdDev = 10e-3; %rad
-dish.specularity = 0.85;
-dish.specularityStdDev = 5e-3;
-dish.halfQuantization = 1;
-% have to define conventions for these angles
-dish.yaw = 0; % x-y plane
-dish.pitch = 0; % z-y plane
-dish.roll = 0; % not needed
-
-%% Central receiver
-pointReceiver = struct();
-pointReceiver.radius = 0.05; %m %radius of aperature
-pointReceiver.area = 6*0.4*0.4; %0.5*0.3*6; %m^2
-pointReceiver.mislocation = [0 0];
-pointReceiver.mass = 10; %kg
-pointReceiver = mergeStructs(pointReceiver,ceramic);
-pointReceiver.pipe.length = 40; %m
-pointReceiver.pipe.radius = 0.0025; %m
-
-%% Stirling receiver
-stirlingReceiver = struct();
-stirlingReceiver.radius = 0.05; %m
-stirlingReceiver.area = 6*0.4*0.4; %m^2
-stirlingReceiver.mislocation = [0 0];
-stirlingReceiver.mass = 10; %kg
-stirlingReceiver = mergeStructs(stirlingReceiver,ceramic);
-stirlingReceiver.plate.length = 0.3; %m
-stirlingReceiver.plate.width = 0.005; %m
-stirlingReceiver.plate = mergeStructs(stirlingReceiver.plate,stainlessSteel);
-stirlingReceiver.plate.desiredTemperature = celcius2kelvin(100);

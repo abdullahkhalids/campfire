@@ -3,7 +3,7 @@ simulation.grainVolume = (simulation.grainLength)^2;
 
 %sun
 sun.halfAngle = deg2rad(min2deg(16));
-[sun.widthAngle sun.lengthAngle sun.daytime] = SunAngles(location.time,location.date,location.latitude,location.longitude,location.timezoneLongitude);
+[sun.widthAngle sun.lengthAngle sun.daytime] = SunAngles(location.time,location.date,location.latitude,location.longitude,location.timezoneLongitude,trough.bearing);
 sun.positionVector = [sind(sun.widthAngle); cosd(sun.widthAngle)]; %this is only the parabola
 sun.fullQuantization = 2*sun.halfQuantization + 1;
 sun.irradiance = setValueStructField(sun,'irradiance',SolarIntensity(location)); %W/m^2
@@ -52,45 +52,45 @@ collectorCycle.quality = 0;
 collectorCycle.volume = pi*(receiver.radius)^2*receiver.length*3; % 3 is an arbitrary factor here.
 collectorCycle.material = collectorCycle.fluid.material;
 
-% %troughStructure
-% troughStructure.length = trough.length*ceil(trough.width/troughStructure.widthInterval);
+%troughStructure
+troughStructure.length = trough.length*ceil(trough.width/troughStructure.widthInterval);
 
 
 
-% %Turbine Cycle
-% turbineCycle.turbineInletTemperature = atmosphere.temperature;
-% turbineCycle.turbineOutletTemperature = atmosphere.temperature;
-% turbineCycle.inletTemperature = atmosphere.temperature;
-% turbineCycle.turbineInletPressure = atmosphere.pressure;
-% turbineCycle.turbineOutletPressure = atmosphere.pressure;
-% % turbineCycle.speed = fluidSpeed(turbineCycle.flowRate,receiver.radius,turbineCycle.fluid.density);
-% turbineCycle.quality = 1;
+%Turbine Cycle
+turbineCycle.turbineInletTemperature = atmosphere.temperature;
+turbineCycle.turbineOutletTemperature = atmosphere.temperature;
+turbineCycle.inletTemperature = atmosphere.temperature;
+turbineCycle.turbineInletPressure = atmosphere.pressure;
+turbineCycle.turbineOutletPressure = atmosphere.pressure;
+% turbineCycle.speed = fluidSpeed(turbineCycle.flowRate,receiver.radius,turbineCycle.fluid.density);
+turbineCycle.quality = 1;
 
-% %Dish
-% dish.refractiveIndex = aluminium.refractiveIndex;
-% sun.vector = SunVector(sun);
-% % dish.axisVector = DishAxisVector(dish);
-% dish.axisVector = sun.vector;
-% 
-% %Central receiver
-% pointReceiver.aperatureArea = pi*pointReceiver.radius^2;
-% pointReceiver.position = dish.focusCoordinates + pointReceiver.mislocation;
-% pointReceiver.temperature = atmosphere.temperature;
-% pointReceiver.volume = sqrt(pointReceiver.area/6)^3;
-% pointReceiver.surfaceStdDev = 0;
-% pointReceiver.coordinates = -pointReceiver.radius:simulation.grainLength:pointReceiver.radius; 
-% pointReceiver.coordinates(2,:) = pointReceiver.position(2);
-% % RecieverCoordinates(pointReceiver, simulation);
-% pointReceiver.gradients = ReceiverGradient(pointReceiver);
-% 
-% %Stirling receiver
-% stirlingReceiver.aperatureArea = pi*pointReceiver.radius^2;
-% stirlingReceiver.position = dish.focusCoordinates + pointReceiver.mislocation;
-% stirlingReceiver.temperature = atmosphere.temperature;
-% stirlingReceiver.volume = sqrt(pointReceiver.area/6)^3;
-% stirlingReceiver.surfaceStdDev = 0;
-% stirlingReceiver.coordinates = -pointReceiver.radius:simulation.grainLength:pointReceiver.radius; 
-% stirlingReceiver.coordinates(2,:) = pointReceiver.position(2);
-% stirlingReceiver.gradients = ReceiverGradient(pointReceiver);
-% stirlingReceiver.plate.temperature = atmosphere.temperature;
-% stirlingReceiver.plate.volume = (stirlingReceiver.plate.length)^2*stirlingReceiver.plate.width;
+%Dish
+dish.refractiveIndex = aluminium.refractiveIndex;
+sun.vector = SunVector(sun);
+% dish.axisVector = DishAxisVector(dish);
+dish.axisVector = sun.vector;
+
+%Central receiver
+pointReceiver.aperatureArea = pi*pointReceiver.radius^2;
+pointReceiver.position = dish.focusCoordinates + pointReceiver.mislocation;
+pointReceiver.temperature = atmosphere.temperature;
+pointReceiver.volume = sqrt(pointReceiver.area/6)^3;
+pointReceiver.surfaceStdDev = 0;
+pointReceiver.coordinates = -pointReceiver.radius:simulation.grainLength:pointReceiver.radius; 
+pointReceiver.coordinates(2,:) = pointReceiver.position(2);
+% RecieverCoordinates(pointReceiver, simulation);
+pointReceiver.gradients = ReceiverGradient(pointReceiver);
+
+%Stirling receiver
+stirlingReceiver.aperatureArea = pi*pointReceiver.radius^2;
+stirlingReceiver.position = dish.focusCoordinates + pointReceiver.mislocation;
+stirlingReceiver.temperature = atmosphere.temperature;
+stirlingReceiver.volume = sqrt(pointReceiver.area/6)^3;
+stirlingReceiver.surfaceStdDev = 0;
+stirlingReceiver.coordinates = -pointReceiver.radius:simulation.grainLength:pointReceiver.radius; 
+stirlingReceiver.coordinates(2,:) = pointReceiver.position(2);
+stirlingReceiver.gradients = ReceiverGradient(pointReceiver);
+stirlingReceiver.plate.temperature = atmosphere.temperature;
+stirlingReceiver.plate.volume = (stirlingReceiver.plate.length)^2*stirlingReceiver.plate.width;

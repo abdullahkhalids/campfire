@@ -5,7 +5,7 @@ function [indexes,isIntersection,intensitiesReflection] = Flux2DLinear(parabola,
 % Compute the incidence angles, vectors and intensities
 [anglesIncidence, vectorsIncidence, intensitiesIncidence] = SunRays(sun,parabola.gradients,simulation);
 
-% These rays are reflected off the receiver surface
+% These rays are reflected off the reflector surface
 [gradientsReflection,vectorsReflection,intensitiesReflection] = ReflectorReflections(atmosphere, parabola, anglesIncidence, vectorsIncidence,intensitiesIncidence); %#ok<ASGLU>
 
 %Compute where each reflected ray ends up on the receiver

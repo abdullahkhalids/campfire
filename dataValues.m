@@ -110,8 +110,8 @@ chrome.absorptance = 0.95;
 
 %bad chrome
 badchrome.material = 'badchrome';
-badchrome.emissivity = 0.8; %units
-badchrome.thermalConductivity = 80; %W/mK
+badchrome.emissivity = 0.4; %units
+badchrome.thermalConductivity = 17; %W/mK
 badchrome.absorptance = 0.80;
 
 

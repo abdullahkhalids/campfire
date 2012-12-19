@@ -61,6 +61,7 @@ q5sun = fluxLengthIntensity*receiver.sleeve.absorptance;
 q3sun = fluxLengthIntensity*(1 - receiver.sleeve.absorptance)*receiver.absorber.absorptance;
 
 %Convection from absorber to the fluid
+
 viscosity = materialProperty(collectorCycle.fluid.viscosityTable,T(1));
 fluidDensity = materialProperty(collectorCycle.fluid.densityTable,T(1));
 

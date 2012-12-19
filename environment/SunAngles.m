@@ -1,11 +1,10 @@
-function [alpha,beta,daytime,S] = SunAngles(time,date,latitude,longitude,timezoneLongitude)
+function [alpha,beta,daytime,S] = SunAngles(time,date,latitude,longitude,timezoneLongitude,bearing)
 %Computes the position of the sun given the time,date,and location
 %time is in the 24 hour clock, in the form [hour min seconds] or just
 %hours.
 %date is in the format [day month], or just day of the year
 %location is in latitude and longitude, with each either a single number of
 %an array with each elemement given the degrees,min,seconds etc.
-
 
 %Get the decimal time
 if length(time)>1
@@ -46,17 +45,26 @@ solarTime = time + Correction;
 
 hourAngle = 15*(solarTime - 12);
 
-%Compute sun angles
-alpha = atand((cosd(solarDeclination)*sind(hourAngle))/(sind(latitude)*sind(solarDeclination) + cosd(latitude)*cosd(solarDeclination)*cosd(hourAngle)));
-beta = atand((cosd(latitude)*sind(solarDeclination) - sind(latitude)*cosd(solarDeclination)*cosd(hourAngle))/(sind(latitude)*sind(solarDeclination) + cosd(latitude)*cosd(solarDeclination)*cosd(hourAngle)));
+% sun vector, from center of earth
+VSunEarth = [cosd(solarDeclination)*sind(hourAngle);sind(solarDeclination);-cosd(solarDeclination)*cosd(hourAngle)];
+
+% shift to latitude
+rotLat = [1 0 0; 0 sind(latitude) -cosd(latitude); 0 cosd(latitude) sind(latitude)];
+
+% shift to trough axis
+rotTrough = [cosd(-bearing) 0 sind(-bearing); 0 1 0; -sind(-bearing) 0 cosd(-bearing)];
+
+% sun vector
+V = rotTrough*rotLat*VSunEarth;
+V = V/norm(V);
+
+alpha = atand(V(1)/V(2));
+beta = atand(V(3)/V(2));
 
 
 if hourAngle<0
-    alpha = -abs(alpha);
+    beta = -abs(beta);
 end
-
-% Compute the vector for the sun
-S = [cosd(beta)*sind(alpha); cosd(beta)*cosd(alpha); sind(beta)*cosd(alpha)]/sqrt(cosd(beta)^2 + sind(beta)^2*cosd(alpha)^2);
 
 %Compute Sunrise and sunset angles
 sunInSkyAngle = acosd(-tand(latitude)*tand(solarDeclination));

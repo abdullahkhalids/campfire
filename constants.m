@@ -21,9 +21,10 @@ trough.surfaceStdDev = 12e-3; %rad
 trough.specularity = 0.9;
 trough.specularityStdDev = 2e-3;
 trough.halfQuantization = 1;
-trough.trackingError = deg2rad(1.5);
+trough.trackingError = deg2rad(0);
 trough.reflectivity = 0.8;
 trough.reflector.type = 'sheet';
+trough.bearing = 0;
 
 %% Receiver Characteristics
 receiver = struct();
@@ -49,8 +50,8 @@ receiver.bracketSpacing = 4;
 
 %% Collector cycle
 collectorCycle = struct();
-collectorCycle.fluid = syltherm;
-collectorCycle.flowRate = 2/60/1000; %m^3/s 
+collectorCycle.fluid = water;
+collectorCycle.flowRate = 1/60/1000; % 0.5; %m^3/s 1g/m-->0.00378541*60m^3/s 
 collectorCycle.inletTemperature = celcius2kelvin(30);
 collectorCycle.outletTemperature = 'default';
 collectorCycle.type = 'fluid';
@@ -69,7 +70,7 @@ sun.irradiance = 600;
 %% Location
 location = lahore;
 location.date = [21 6];
-location.time = [12 10];
+location.time = [8 10];
 
 %% Atmosphere
 atmosphere = struct();

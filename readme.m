@@ -1,9 +1,5 @@
-% Version 7.3.
-% Frozen September 24, 2012 07:30 pm.
-
-% This version is serious refactoring of the code, and is moving towards a
-% public API version. It now implements an optical model for both a
-% parabolic trough and a dish, as well as thermal models.
+% Version 7.4.
+% Frozen December 19, 2012 9:00 pm.
 
 % Please start with constants.m. Define the properties of your system. Most
 % properties are self explanatory.
@@ -13,4 +9,4 @@
 % symmetry.
 
 % New
-% * Modified and fixed thermal model for dish
+% * Improved SunAngles to account for rotated trough

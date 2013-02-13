@@ -75,6 +75,8 @@ else
     daytime = 1;
 end
 
+S = [cosd(beta)*sind(alpha); cosd(beta)*cosd(alpha); sind(beta)*cosd(alpha)];
+
 
 end
 

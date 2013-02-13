@@ -3,6 +3,7 @@ function vectorsOut = RotateVectors(vectorsIn,n,maxRotation)
 %expanded vectors. The angles given.
 
 
+
 %lengths
 m = 2*n+1;
 vn = size(vectorsIn,2);

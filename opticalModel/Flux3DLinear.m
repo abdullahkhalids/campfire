@@ -2,14 +2,15 @@ function [InterceptFactor,PowerReceiver, PowerTrough,receiverEffectiveLength] = 
 %2DFLUX3D Given the intersection points on a receiver of rays and their
 %intensities, computes the 3D total flux etc
 
-%add up all the intensities at the receiver for each point
-receiverDistribution = zeros(1,length(receiver.coordinates));
-for i=1:length(intensitiesReflection)
-    if isIntersection(i)
-        receiverDistribution(intersectionIndexes(i)) = receiverDistribution(intersectionIndexes(i)) + intensitiesReflection(i);
-    end
-end
+% %add up all the intensities at the receiver for each point
+% receiverDistribution = zeros(1,length(receiver.coordinates));
+% for i=1:length(intensitiesReflection)
+%     if isIntersection(i)
+%         receiverDistribution(intersectionIndexes(i)) = receiverDistribution(intersectionIndexes(i)) + intensitiesReflection(i);
+%     end
+% end
 
+receiverDistribution = sum(intensitiesReflection(isIntersection));
 
 %Set up coordinate system.
 %e:end

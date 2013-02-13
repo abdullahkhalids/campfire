@@ -1,10 +1,10 @@
+loadRandStream(simulation.randCheck,simulation.randStreamName)
+
 %set up some simulation factors
 simulation.grainVolume = (simulation.grainLength)^2;
 
 %sun
-sun.halfAngle = deg2rad(min2deg(16));
-[sun.widthAngle sun.lengthAngle sun.daytime] = SunAngles(location.time,location.date,location.latitude,location.longitude,location.timezoneLongitude,trough.bearing);
-sun.positionVector = [sind(sun.widthAngle); cosd(sun.widthAngle)]; %this is only the parabola
+[sun.widthAngle sun.lengthAngle sun.daytime sun.positionVector] = SunAngles(location.time,location.date,location.latitude,location.longitude,location.timezoneLongitude,trough.bearing);
 sun.fullQuantization = 2*sun.halfQuantization + 1;
 sun.irradiance = setValueStructField(sun,'irradiance',SolarIntensity(location)); %W/m^2
 
@@ -13,7 +13,7 @@ atmosphere.temperature = setValueStructField(atmosphere,'temperature',AmbientTem
 atmosphere.windSpeed = setValueStructField(atmosphere,'windSpeed',WindSpeed(location));
 atmosphere.pressure = setValueStructField(atmosphere,'pressure',atm2bar(1));
 
-%compute trough coordinates
+%compute trough stuff
 trough.rotAngle = deg2rad(sun.widthAngle) + trough.trackingError;
 trough.height = ParabolaHeight(trough.focalLength,trough.width);
 trough.rimAngle = ParabolaRimAngle(trough.focalLength, trough.width);
@@ -25,6 +25,7 @@ trough.gradients = ParabolaGradient(trough.coordinates,trough.surfaceStdDev);
 trough.coordinates = trough.coordinates(:,2:end-1); %throw away the coordinates no longer needed
 trough.fullQuantization = 2*trough.halfQuantization + 1;
 if trough.halfQuantization == 0; trough.specularity = 1; end;
+trough.normals = normalize([-trough.gradients(1,:); ones(1,length(trough.gradients)); -trough.gradients(2,:)]);
 trough.reflector.length = trough.length;
 trough.reflector.width = trough.arcLength;
 trough.reflector.material = trough.material;
@@ -40,7 +41,7 @@ receiver.absorber.length = receiver.length; %m
 receiver.sleeve.length = receiver.length; %m
 receiver.position = trough.focusCoordinates + receiver.mislocation;
 receiver.coordinates = RecieverCoordinates(receiver, simulation);
-receiver.gradients = ReceiverGradient(receiver);
+receiver.gradients = ReceiverGradient(receiver.coordinates,receiver.surfaceStdDev);
 receiver.nBrackets = ceil(receiver.length/receiver.bracketSpacing);
 
 %Collector Cycle

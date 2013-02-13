@@ -5,6 +5,8 @@ dataValues;
 simulation = struct();
 simulation.size = [2 2];
 simulation.grainLength = 1e-3;
+simulation.randCheck = false;
+simulation.randStreamName = 'randstream';
 simulation.receiverSegmentLength = 0.2;
 simulation.time = 60*60;
 
@@ -18,7 +20,7 @@ trough.width = 1;
 trough.length = 2.5;
 trough = mergeStructs(trough,aluminium);
 trough.material = 'alref1';
-trough.surfaceStdDev = 12e-3; %rad
+trough.surfaceStdDev = [12e-3 12e-3]; %rad [width length]
 trough.specularity = 0.9;
 trough.specularityStdDev = 2e-3;
 trough.halfQuantization = 1;
@@ -26,6 +28,7 @@ trough.trackingError = deg2rad(0);
 trough.reflectivity = 0.85; % 0.95
 trough.reflector.type = 'sheet';
 trough.bearing = 0;
+trough.reflectivityCheck = true; %if true, then use reflectivity, otherwise fresnel
 
 %% Receiver Characteristics
 receiver = struct();
@@ -75,7 +78,8 @@ field.transmissionLoss = 0.85;
 %% Sun Characteristics
 sun = struct();
 sun.halfQuantization = 1;
-sun.irradiance = 600;
+sun.irradiance = 600; %look at this
+sun.halfAngle = deg2rad(min2deg(16));
 
 %% Location
 location = lahore;

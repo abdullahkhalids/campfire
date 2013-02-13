@@ -1,14 +1,8 @@
+
 % clear all;
-warning off
 tic
 %get user simulation constants
 constants;
-
-
-%reset random number stream
-defaultStream = RandStream.getDefaultStream;
-load('randstream');
-defaultStream.State = savedState;
 
 %rest of simulation parameters
 calculations;

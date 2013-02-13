@@ -1,8 +1,5 @@
-function gradientsNew = SurfaceErrors(coord,sigma)
+function gradientsNew = SurfaceErrors(gradients,sigma)
 %Introduces surface deformities into a surface
-
-%first compute the gradient of the surface
-gradients = Gradient(coord);
 
 %compute gradients of the normal
 gradientsNormal = -1./gradients;

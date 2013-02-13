@@ -11,10 +11,10 @@ function [InterceptFactor,PowerReceiver, PowerReflector,receiverEffectiveLength]
 
 
 %% 2D Optical Model
-[indexes,isIntersection,intensitiesReflection] = Flux2DLinear(trough,receiver,sun,atmosphere,simulation);
+[isIntersection,intensitiesReflection] = Flux2DLinear(trough,receiver,sun,atmosphere,simulation);
 
 %% 3D Optical Model
-[InterceptFactor,PowerReceiver, PowerReflector,receiverEffectiveLength] = Flux3DLinear(indexes,isIntersection,intensitiesReflection,trough,receiver,sun,simulation);
+[InterceptFactor,PowerReceiver, PowerReflector,receiverEffectiveLength] = Flux3DLinear(0,isIntersection,intensitiesReflection,trough,receiver,sun,simulation);
 
 end
 

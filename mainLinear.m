@@ -1,4 +1,3 @@
-
 % clear all;
 tic
 %get user simulation constants

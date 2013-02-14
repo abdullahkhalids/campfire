@@ -1,5 +1,5 @@
-% Version 8.0.
-% Frozen February 13, 2013 7:30 pm.
+% Version 8.1.
+% Frozen February 14, 2013 9:20 pm.
 
 % Please start with constants.m. Define the properties of your system. Most
 % properties are self explanatory.
@@ -9,6 +9,5 @@
 % symmetry.
 
 % New
-% * Upgraded optical model to 3D. This is fairly primitive and needs to be
-% improved
-% * Cosmetic changes
+% * Improved specularity rays. Now more closely follows normal
+% distribution.

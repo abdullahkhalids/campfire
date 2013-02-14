@@ -10,11 +10,9 @@ normalsExpanded = expand(parabola.normals,@(x)repmat(x,1,m));
 [anglesIncidence, vectorsIncidence, intensitiesIncidence] = SunRays(normalsExpanded,sun,simulation);
 
 % These rays are reflected off the reflector surface
-[vectorsReflection,intensitiesReflection] = ReflectorReflections(atmosphere, parabola,normalsExpanded, anglesIncidence, vectorsIncidence,intensitiesIncidence); %#ok<ASGLU>
+[vectorsReflection,intensitiesReflection] = ReflectorReflections(atmosphere, parabola,normalsExpanded, anglesIncidence, vectorsIncidence,intensitiesIncidence);
 
-%Compute where each reflected ray ends up on the receiver
-%[indexes,isIntersection] = ReceiverIntersectionsLinear(gradientsReflection,parabola,receiver,sun);
-
+%Compute if each reflected ray ends up on the receiver
 isIntersection = ReceiverIntersectionsCylinder(vectorsReflection,parabola,receiver,sun);
 
 end

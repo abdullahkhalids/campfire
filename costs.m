@@ -101,3 +101,5 @@ costTable.structure.fluid = 'volume';
 costTable.sheet = sheet;
 costTable.pipe = pipe;
 costTable.fluid = fluid;
+
+clear pipe sheet fluid materialname1 materialname2 materialname3;

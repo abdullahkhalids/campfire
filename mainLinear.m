@@ -10,19 +10,19 @@ calculations;
 [InterceptFactor,PowerReceiver, PowerTrough, receiver.effectiveLength] = OpticalModelLinear(simulation,trough,receiver,sun,atmosphere);
 
 %Output temperature from receiver
-[collectorCycle.outletTemperature T] = ReceiverTemperatureLinear(receiver, PowerReceiver, collectorCycle, atmosphere,simulation);
+[collectorCycle.outletTemperature] = ReceiverTemperatureLinear(receiver, PowerReceiver, collectorCycle, atmosphere,simulation);
 
 toc
-massFlowRate = collectorCycle.flowRate*materialProperty(collectorCycle.fluid.densityTable,collectorCycle.inletTemperature);
+
 Trise = collectorCycle.outletTemperature - collectorCycle.inletTemperature;
-thermalEff = massFlowRate*materialProperty(collectorCycle.fluid.heatCapacityTable,collectorCycle.inletTemperature)*Trise;
+thermalGain = collectorCycle.massFlowRate*materialProperty(collectorCycle.fluid.heatCapacityTable,collectorCycle.inletTemperature)*Trise;
 
 disp(['Power On Receiver = ' num2str(PowerReceiver) 'W'])
 disp(['Intercept Factor = ' num2str(InterceptFactor*100) '%']);
-disp(['Output Temperature increase = ' num2str(collectorCycle.outletTemperature- collectorCycle.inletTemperature) ' C']);
+disp(['Output Temperature increase = ' num2str(Trise) ' C']);
 disp(['Flow Rate = ' num2str(1000*collectorCycle.flowRate*60) ' liters/min']);
-disp(['Thermal Efficiency = ', num2str(100*thermalEff/PowerReceiver),'%']);
-disp(['Total Efficiency = ', num2str(100*thermalEff/PowerTrough),'%']);
+disp(['Thermal Efficiency = ', num2str(100*thermalGain/PowerReceiver),'%']);
+disp(['Total Efficiency = ', num2str(100*thermalGain/PowerTrough),'%']);
 
 %costs
 costs;

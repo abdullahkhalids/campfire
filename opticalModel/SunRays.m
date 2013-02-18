@@ -6,12 +6,15 @@ function [anglesIncidence, vectorsIncidence, intensitiesIncidence] = SunRays(nor
 m = 4*sun.halfQuantization+1;
 
 % expand sun vector into cone
-Rot = @(angle,vector,axes) createRotation(angle,axes)*vector;
+% Rot = @(angle,vector,axes) createRotation(angle,axes)*vector;
 base = zeros(3,m);
 xbase = linspace(-sun.halfAngle,sun.halfAngle,2*sun.halfQuantization+1);
 zbase = linspace(-sun.halfAngle,sun.halfAngle,2*sun.halfQuantization);
-base(:,1:2:end) = expand(xbase,@(theta) Rot(theta,sun.positionVector,'x'));
-base(:,2:2:end-1) = expand(zbase,@(theta) Rot(theta,sun.positionVector,'z'));
+% base(:,1:2:end) = expand(xbase,@(theta) Rot(theta,sun.positionVector,'x'));
+% base(:,2:2:end-1) = expand(zbase,@(theta) Rot(theta,sun.positionVector,'z'));
+base(:,1:2:end) = expand(xbase,@(theta) [1 0 0; 0 cos(theta) -sin(theta); 0 sin(theta) cos(theta)]*sun.positionVector);
+base(:,2:2:end-1) = expand(zbase,@(theta) [cos(theta) sin(theta) 0; -sin(theta) cos(theta) 0; 0 0 1]*sun.positionVector);
+
 
 % and get incidence angles
 vectorsIncidence = repmat(base,1,size(normalsExpanded,2)/m);

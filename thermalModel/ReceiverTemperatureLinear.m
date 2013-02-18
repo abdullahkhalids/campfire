@@ -10,8 +10,6 @@ T = zeros(m,5);
 Tguess = collectorCycle.inletTemperature*ones(1,5);
 options=optimset('Display','Off','TolFun',1e-4,'TolX',1e-4);
 
-% mass flow rate remains constant because of pump
-collectorCycle.massFlowRate = collectorCycle.flowRate*materialProperty(collectorCycle.fluid.densityTable,collectorCycle.inletTemperature);
 for i = 1:m+1
     
     %Given the input temp and a guess, compute the temperatures of this
@@ -61,7 +59,6 @@ q5sun = fluxLengthIntensity*receiver.sleeve.absorptance;
 q3sun = fluxLengthIntensity*(1 - receiver.sleeve.absorptance)*receiver.absorber.absorptance;
 
 %Convection from absorber to the fluid
-
 viscosity = materialProperty(collectorCycle.fluid.viscosityTable,T(1));
 fluidDensity = materialProperty(collectorCycle.fluid.densityTable,T(1));
 
@@ -84,7 +81,6 @@ if ReD2>2300
     
     Nu1 = ((f2/8)*(ReD2 - 1000)*Pr1)/(1 + 12.7*sqrt(f2/8)*(Pr1^(2/3)-1))*(Pr1/Pr2)^0.11;
     h1 = Nu1*k1/DH;
-    
 else
     annulusRatio = Da/receiver.absorber.innerDiameter;
     Nu1 = interp1([0 0.05 0.1 0.2 0.4 0.6 0.8 1], [4.364 4.792 4.834 4.833 4.979 5.099 5.24 5.385],annulusRatio);
@@ -192,6 +188,7 @@ else
     n = 0.36;
 end
 
+% bracket losses
 Nu_bracket= C*Re^m*Pr6_bracket^n*(Pr6_bracket/Pr5_bracket)^(1/4);
 Peri_b =0.2032; A_cs = 1.613e-4; kb = 48e-3; 
 

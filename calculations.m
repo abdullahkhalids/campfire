@@ -16,15 +16,15 @@ atmosphere.pressure = setValueStructField(atmosphere,'pressure',atm2bar(1));
 %compute trough stuff
 trough.rotAngle = deg2rad(sun.widthAngle) + trough.trackingError;
 trough.height = ParabolaHeight(trough.focalLength,trough.width);
-trough.rimAngle = ParabolaRimAngle(trough.focalLength, trough.width);
+% trough.rimAngle = ParabolaRimAngle(trough.focalLength, trough.width);
 trough.arcLength = ParabolaArcLength(trough.focalLength,trough.width);
 trough.area = trough.arcLength*trough.length;
 trough.aperature = trough.width*trough.length;
 trough.coordinates = ParabolaCoordinates(trough, simulation);
 trough.gradients = ParabolaGradient(trough.coordinates,trough.surfaceStdDev);
 trough.coordinates = trough.coordinates(:,2:end-1); %throw away the coordinates no longer needed
-trough.fullQuantization = 2*trough.halfQuantization + 1;
-if trough.halfQuantization == 0; trough.specularity = 1; end;
+% trough.fullQuantization = 2*trough.halfQuantization + 1;
+% if trough.halfQuantization == 0; trough.specularity = 1; end;
 trough.normals = normalize([-trough.gradients(1,:); ones(1,length(trough.gradients)); -trough.gradients(2,:)]);
 trough.reflector.length = trough.length;
 trough.reflector.width = trough.arcLength;
@@ -49,13 +49,13 @@ collectorCycle.inletTemperature = setValueStructField(collectorCycle,'inletTempe
 collectorCycle.outletTemperature = setValueStructField(collectorCycle,'outletTemperature', atmosphere.temperature);
 collectorCycle.area = pi*(receiver.absorber.innerDiameter^2 - receiver.annulus.diameter^2)/4;
 collectorCycle.speed = fluidSpeed(collectorCycle.flowRate,receiver.absorber.innerDiameter,collectorCycle.fluid.density,receiver.annulusCheck,receiver.annulus.diameter);
-collectorCycle.quality = 0;
-collectorCycle.volume = pi*(receiver.radius)^2*receiver.length*3; % 3 is an arbitrary factor here.
-collectorCycle.material = collectorCycle.fluid.material;
+collectorCycle.massFlowRate = collectorCycle.flowRate*materialProperty(collectorCycle.fluid.densityTable,collectorCycle.inletTemperature);
+
+% collectorCycle.quality = 0;
+% collectorCycle.volume = pi*(receiver.radius)^2*receiver.length*3; % 3 is an arbitrary factor here.
+% collectorCycle.material = collectorCycle.fluid.material;
 
 %Field
 field.columnFlowRate = field.totalFlowRate/field.parallel;
 field.nTroughs = field.parallel*field.series;
 
-% %troughStructure
-% troughStructure.length = trough.length*ceil(trough.width/troughStructure.widthInterval);

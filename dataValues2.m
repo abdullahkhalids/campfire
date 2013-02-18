@@ -1,3 +1,5 @@
+warning('off','MATLAB:polyfit:RepeatedPointsOrRescale');
+
 %% Materials
 %aluminium
 materials.aluminium = struct();
@@ -19,17 +21,26 @@ materials.water.latentHeatEvaporation = 2257e3; %J/kg
 materials.water.boilingPoint = 373.13; %K
 materials.water.heatCapacityVapor = 2000; %J/kg.K
 materials.water.viscosityTable.name = 'viscosity';
-materials.water.viscosityTable.temperature = celcius2kelvin(0:10:100);
-materials.water.viscosityTable.viscosity = [1.787 1.307 1.002 0.798 0.653 0.547 0.467 0.404 0.355 0.315 0.282]*1e-3; %Ps s
+x = celcius2kelvin(0:10:100); y =[1.787 1.307 1.002 0.798 0.653 0.547 0.467 0.404 0.355 0.315 0.282]*1e-3;
+materials.water.viscosityTable.temperature = x;
+materials.water.viscosityTable.viscosity = y; %Ps s
+materials.water.viscosityTable.poly = polyfit(x,y,polydeg(x,y));
 materials.water.heatCapacityTable.name = 'heatCapacity';
-materials.water.heatCapacityTable.temperature = celcius2kelvin(0:20:100);
-materials.water.heatCapacityTable.heatCapacity = [4217 4182 4179 4184 4196 4216]; %J/kg K
+x = celcius2kelvin(0:20:100); y = [4217 4182 4179 4184 4196 4216];
+materials.water.heatCapacityTable.temperature = x;
+materials.water.heatCapacityTable.heatCapacity = y; %J/kg K
+materials.water.heatCapacityTable.temperature = x;
+materials.water.heatCapacityTable.poly = polyfit(x,y,polydeg(x,y));
 materials.water.densityTable.name = 'density';
-materials.water.densityTable.temperature = celcius2kelvin(0:20:100);
-materials.water.densityTable.density = [1000 998 992 983 971.8 958.4];%kg/m^3
+x = celcius2kelvin(0:20:100); y = [1000 998 992 983 971.8 958.4];
+materials.water.densityTable.temperature = x;
+materials.water.densityTable.density = y;%kg/m^3
+materials.water.densityTable.poly = polyfit(x,y,polydeg(x,y));
 materials.water.heatConductivityTable.name = 'heatConductivity';
-materials.water.heatConductivityTable.temperature = 275:10:375;
-materials.water.heatConductivityTable.heatConductivity = [574 590 606 620 634 645 656 664 671 677 681]*1e-3; %W/m K
+x = 275:10:375; y = [574 590 606 620 634 645 656 664 671 677 681]*1e-3;
+materials.water.heatConductivityTable.temperature = x;
+materials.water.heatConductivityTable.heatConductivity = y; %W/m K
+materials.water.heatConductivityTable.poly = polyfit(x,y,polydeg(x,y));
 
 
 %Syltherm 800 Stabilized HTF
@@ -136,19 +147,31 @@ materials.air.material = 'air';
 materials.air.refractiveIndex = 1;
 materials.air.thermalConductivityTable = struct();
 materials.air.thermalConductivityTable.name = 'thermalConductivity';
-materials.air.thermalConductivityTable.temperature = [290 300 310 320 330 340 350 400 450 500 550 600 700 800 900 1000]; %K
-materials.air.thermalConductivityTable.thermalConductivity = [0.0253 0.0261 0.0268 0.0275 0.0283 0.0290 0.0297 0.0331 0.0363 0.0395 0.0426 0.0456 0.0513 0.0569 0.0625 0.0672]; %W/ m K Thermal conductivity
+x = [290 300 310 320 330 340 350 400 450 500 550 600 700 800 900 1000];
+y = [0.0253 0.0261 0.0268 0.0275 0.0283 0.0290 0.0297 0.0331 0.0363 0.0395 0.0426 0.0456 0.0513 0.0569 0.0625 0.0672];
+materials.air.thermalConductivityTable.temperature = x; %K
+materials.air.thermalConductivityTable.thermalConductivity = y; %W/ m K Thermal conductivity
+materials.air.thermalConductivityTable.poly = polyfit(x,y,polydeg(x,y));
 materials.air.viscosityTable = struct();
 materials.air.viscosityTable.name = 'viscosity';
-materials.air.viscosityTable.temperature = [290 300 310 320 330 340 350 400 450 500 550 600 700 800 900 1000]; %K
-materials.air.viscosityTable.viscosity = [1.48 1.57 1.67 1.77 1.86 1.96 2.06 2.6 3.18 3.8 4.45 5.15 6.64 8.25 9.99 11.8]*10^-5; %Kinematic viscosity m^2/s
+x = [290 300 310 320 330 340 350 400 450 500 550 600 700 800 900 1000];
+y = [1.48 1.57 1.67 1.77 1.86 1.96 2.06 2.6 3.18 3.8 4.45 5.15 6.64 8.25 9.99 11.8]*10^-5;
+materials.air.viscosityTable.temperature = x; %K
+materials.air.viscosityTable.viscosity = y; %Kinematic viscosity m^2/s
+materials.air.viscosityTable.poly = polyfit(x,y,polydeg(x,y));
 materials.air.prandtlNumberTable = struct();
 materials.air.prandtlNumberTable.name = 'prandtlNumber';
-materials.air.prandtlNumberTable.temperature = [290 300 310 320 330 340 350 400 450 500 550 600 700 800 900 1000]; %K
-materials.air.prandtlNumberTable.prandtlNumber = [0.714 0.712 0.711 0.710 0.708 0.707 0.706 0.703 0.7 0.699 0.698 0.698 0.702 0.704 0.705 0.709];
+x = [290 300 310 320 330 340 350 400 450 500 550 600 700 800 900 1000];
+y = [0.714 0.712 0.711 0.710 0.708 0.707 0.706 0.703 0.7 0.699 0.698 0.698 0.702 0.704 0.705 0.709];
+materials.air.prandtlNumberTable.temperature = x; %K
+materials.air.prandtlNumberTable.prandtlNumber = y;
+materials.air.prandtlNumberTable.poly = polyfit(x,y,polydeg(x,y));
 materials.air.thermalDiffusivityTable.name = 'thermalDiffusivity';
-materials.air.thermalDiffusivityTable.temperature = [290 300 310 320 330 340 350 400 450 500 550 600 700 800 900 1000]; %K
-materials.air.thermalDiffusivityTable.thermalDiffusivity = [2.08 2.21 2.35 2.49 2.64 2.78 2.92 3.70 4.54 5.44 6.39 7.37 9.46 11.7 14.2 16.7]*1e-5; %m^2/s
+x = [290 300 310 320 330 340 350 400 450 500 550 600 700 800 900 1000];
+y = [2.08 2.21 2.35 2.49 2.64 2.78 2.92 3.70 4.54 5.44 6.39 7.37 9.46 11.7 14.2 16.7]*1e-5;
+materials.air.thermalDiffusivityTable.temperature = x; %K
+materials.air.thermalDiffusivityTable.thermalDiffusivity = y; %m^2/s
+materials.air.thermalDiffusivityTable.poly = polyfit(x,y,polydeg(x,y));
 
 %vacuum
 materials.vacuum = struct();
@@ -197,3 +220,6 @@ fuels.diesel.massPrice = 109; %Rs/kg
 
 %suigas
 fuels.suigas.joulePrice = 460/1.06e9; %Rs/J
+
+
+clear x y;

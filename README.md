@@ -18,6 +18,8 @@ Then run mainLinear.m to run a simulation of the model and display some results.
 
 mainFieldLCOE.m is a script that also runs costing code associated with the model. 
 
+More details can be found in our [thesis](https://github.com/abdullahkhalids/campfire/blob/master/CSPThesis2012LUMSSSE.pdf).
+
 License
 =======
 

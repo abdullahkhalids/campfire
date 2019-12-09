@@ -21,7 +21,6 @@ mainFieldLCOE.m is a script that also runs costing code associated with the mode
 License
 =======
 
-We would like everyone to use this model and improve upon it. The exact license is as yet undecided, but it will
-allow all usage, even for commercial purposes. 
+This code is licensed under the GPLv3 license.
 
 If you use this code please drop an email at abdullahkhalids@gmail.com.
